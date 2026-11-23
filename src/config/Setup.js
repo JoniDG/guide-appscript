@@ -192,8 +192,8 @@ function setup() {
   );
 
   // Tema HTML / UI: la hoja Panel con los botones (se rearma en cada setup).
-  crearPanel_();
-  console.log(`Hoja "${SHEET_PANEL}" creada con sus botones.`);
+  const botones = crearPanel_();
+  console.log(`Hoja "${SHEET_PANEL}" creada con ${botones} botones.`);
 
   writeIndexSheet_(spreadsheet.getSheetByName(INDEX_SHEET_NAME));
   console.log(

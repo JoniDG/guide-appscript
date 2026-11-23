@@ -21,6 +21,10 @@
  *      el menú o casillas con un trigger, ver tema Triggers).
  *    - Para mover o editar un botón con script, hacé clic DERECHO sobre él
  *      (el clic izquierdo lo ejecuta).
+ *    - Si el código inserta imágenes en una hoja que la planilla tiene
+ *      abierta (como hace setup() al recrear el Panel), a veces no se ven
+ *      hasta recargar la planilla (F5). Están: es solo la vista que no se
+ *      actualizó (comprobado probando).
  *
  *  Las imágenes de los botones son PNG guardados como texto base64 (ver
  *  drive/Blobs.js). Se generaron una sola vez, fuera de Apps Script.
@@ -67,6 +71,8 @@ function botonesDelPanel_() {
 /**
  * Arma la hoja "Panel" desde cero: título, botones con su script asignado
  * y una explicación al lado de cada uno. La llama setup().
+ *
+ * @returns {number}  Cantidad de imágenes (botones) que quedaron en la hoja.
  */
 function crearPanel_() {
   // Recreamos la hoja para no acumular botones repetidos en cada setup().
@@ -95,4 +101,8 @@ function crearPanel_() {
       .setAltTextTitle(boton.funcion);
     hoja.getRange(fila, 3).setValue(boton.ayuda).setVerticalAlignment("middle").setWrap(true);
   });
+
+  // Devolvemos cuántas imágenes quedaron en la hoja, para confirmar en el
+  // log que los botones se insertaron.
+  return hoja.getImages().length;
 }

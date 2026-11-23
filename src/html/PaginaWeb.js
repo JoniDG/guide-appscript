@@ -35,7 +35,7 @@
  *  corre como quien la abre, así que cualquier editor pasa el chequeo, lo
  *  cual está bien: los editores ya pueden ver y cambiar el código):
  *    https://script.google.com/macros/s/<ID>/dev?pagina=alta
- *  En Implementar > Probar implementaciones está esa URL.
+ *  Esa URL está en Implementar > Implementaciones de prueba.
  * ============================================================================
  */
 
