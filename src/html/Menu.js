@@ -49,6 +49,13 @@ function onOpen(e) {
         .addItem("Crear formulario de alta (+ trigger)", "demo_crearFormularioDeAlta")
         .addItem("Borrar formulario de alta", "demo_borrarFormularioDeAlta"),
     )
+    .addSubMenu(
+      ui
+        .createMenu("Estado y jobs")
+        .addItem("Iniciar job de ejemplo (5.000 clientes en tandas)", "iniciarJobDeEjemplo")
+        .addItem("Ver estado del job", "verEstadoDelJob")
+        .addItem("Cancelar job", "cancelarJobDeEjemplo"),
+    )
     // addSeparator: una línea divisoria en el menú.
     .addSeparator()
     .addSubMenu(

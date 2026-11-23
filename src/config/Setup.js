@@ -61,6 +61,9 @@ const SHEET_REPORTE = "Reporte";
 // Tema Triggers
 const SHEET_TAREAS = "Tareas";
 const SHEET_REGISTRO_TRIGGERS = "Registro de triggers";
+// Tema Estado (se crea al iniciar el job, ver estado/JobsLargos.js)
+const SHEET_JOB = "Job de ejemplo";
+const SHEET_CONTADORES = "Contadores demo"; // se crea al correr el experimento
 const CLIENTES_HEADERS = [
   "id",
   "nombre",
@@ -135,7 +138,7 @@ const GUIDE_TOPICS = [
     numero: 8,
     tema: "Estado, concurrencia y jobs largos",
     carpeta: "src/estado",
-    estado: "Pendiente",
+    estado: "Listo",
   },
   {
     numero: 9,

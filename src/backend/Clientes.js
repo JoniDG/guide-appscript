@@ -61,7 +61,12 @@ function conCandado_(tarea) {
     );
   }
   try {
-    return tarea();
+    const resultado = tarea();
+    // flush: que lo escrito llegue a la planilla ANTES de soltar el
+    // candado, así el próximo pedido lee los datos ya actualizados (ver
+    // estado/Candados.js).
+    SpreadsheetApp.flush();
+    return resultado;
   } finally {
     // finally: liberamos el candado SIEMPRE, aunque haya habido un error.
     lock.releaseLock();
