@@ -19,6 +19,13 @@
  *    1. En el otro proyecto: Bibliotecas + (a la izquierda) > pegá el ID >
  *       Buscar > elegí la versión > Identificador: por ejemplo "Guia" >
  *       Agregar.
+ *       OJO CON LA VERSIÓN (comprobado probando): las versiones son del
+ *       PROYECTO ENTERO, no de cada implementación. Si antes publicaste el
+ *       web app varias veces, ya existen las versiones 1, 2, 3... y la de
+ *       la biblioteca es la ÚLTIMA (la más alta), no la 1. Cada versión es
+ *       una "foto" del código de ese momento: elegir una vieja da errores
+ *       como "Guia.formatearMontoArgentino is not a function", porque esa
+ *       función todavía no existía en la foto.
  *    2. Desde ese proyecto: Guia.formatearMontoArgentino(1878.3)
  *
  *  REGLAS
