@@ -280,8 +280,15 @@ function demo_constanciaDeCliente(fila = 2) {
     },
     [pdf.getBlob()],
   );
+  // Un cartel con los links directos, para no tener que buscar nada en Drive.
+  const plantilla = DriveApp.getFileById(obtenerPlantillaDeConstancia_());
   avisarSiSePuede_(
-    `Constancia generada y mandada a ${destinatarioDePrueba_()}. Mirá la carpeta "Constancias".`,
+    `Constancia generada y mandada a ${destinatarioDePrueba_()}.\n\n` +
+      `PDF: ${pdf.getUrl()}\n\n` +
+      `Documento: ${doc.getUrl()}\n\n` +
+      `Carpeta "Constancias": ${carpeta.getUrl()}\n\n` +
+      `Plantilla (cambiale el diseño acá): ${plantilla.getUrl()}`,
+    true,
   );
 }
 
@@ -379,5 +386,5 @@ function demo_documentoDesdeCero() {
   doc.saveAndClose();
   DriveApp.getFileById(doc.getId()).moveTo(carpetaDeDemos_());
   console.log("Documento creado:", doc.getUrl());
-  avisarSiSePuede_("Documento creado en la carpeta Demos Drive.");
+  avisarSiSePuede_(`Documento creado en la carpeta Demos Drive:\n\n${doc.getUrl()}`, true);
 }
