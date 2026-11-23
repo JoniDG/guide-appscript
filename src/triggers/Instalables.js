@@ -175,9 +175,19 @@ function alEditarTareaInstalable(e) {
  * de esas cosas). e.changeType dice qué pasó:
  *   EDIT, INSERT_ROW, INSERT_COLUMN, REMOVE_ROW, REMOVE_COLUMN,
  *   INSERT_GRID (hoja nueva), REMOVE_GRID (hoja borrada), FORMAT, OTHER.
- * Ojo: no dice DÓNDE fue el cambio (no trae e.range). Y una sola acción
- * puede disparar VARIOS eventos: al insertar una fila llegan dos, uno
- * INSERT_ROW y otro OTHER (comprobado probando).
+ * Ojo:
+ *   - No dice DÓNDE fue el cambio (no trae e.range).
+ *   - La documentación oficial solo lista los nombres, sin explicar cada
+ *     uno. OTHER es un "cajón de sastre": según la comunidad, llega al
+ *     renombrar una hoja, insertar gráficos o imágenes, tocar notas o
+ *     comentarios, e incluso cuando se recalculan fórmulas como
+ *     IMPORTRANGE aunque ningún valor cambie. Y no hay forma de saber qué
+ *     acción concreta lo provocó.
+ *   - Una sola acción puede disparar VARIOS eventos: al insertar una fila
+ *     llegan INSERT_ROW y además OTHER (comprobado probando).
+ *  Conclusión práctica: reaccioná solo a los tipos concretos que te
+ *  interesan (INSERT_ROW, REMOVE_GRID...) y, antes de hacer algo costoso,
+ *  verificá el estado real de la hoja: no te bases en OTHER.
  *
  * @param {GoogleAppsScript.Events.SheetsOnChange} e
  */
