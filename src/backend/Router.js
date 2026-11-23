@@ -22,6 +22,10 @@
  *      (otro sistema, curl, UrlFetchApp, una página de un visitante sin
  *      sesión) es redirigido a la pantalla de login y nunca llega a tu
  *      código. Por eso, en una API pública, usá ?ruta=.
+ *  El código original de esta guía ya lo resolvía así, con un parámetro
+ *  ?func=saveData en la URL (ver el primer commit del repo). Esta versión
+ *  conserva esa idea (?ruta= cumple el mismo papel) y le suma rutas con
+ *  parámetros (clientes/:id), métodos, token y un formato de respuesta fijo.
  *
  *  ¿Y PATCH / DELETE, si Apps Script solo tiene GET y POST?
  *  Se mandan como POST con el campo _method: "PATCH" en el cuerpo JSON (o
