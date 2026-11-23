@@ -38,6 +38,17 @@ function onOpen(e) {
     )
     .addItem("Subir archivo a Drive…", "abrirSubirArchivo")
     .addItem("Generar reporte rápido", "generarReporte")
+    .addSubMenu(
+      ui
+        .createMenu("Triggers")
+        .addItem("Instalar triggers de la guía", "instalarTriggersDeLaGuia")
+        .addItem("Desinstalar triggers de la guía", "desinstalarTriggersDeLaGuia")
+        .addItem("Ver triggers instalados", "verTriggersInstalados")
+        .addItem("Programar una tarea en 1 minuto", "demo_programarEnUnMinuto")
+        .addSeparator()
+        .addItem("Crear formulario de alta (+ trigger)", "demo_crearFormularioDeAlta")
+        .addItem("Borrar formulario de alta", "demo_borrarFormularioDeAlta"),
+    )
     // addSeparator: una línea divisoria en el menú.
     .addSeparator()
     .addSubMenu(

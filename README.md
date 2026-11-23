@@ -26,7 +26,7 @@ Sirve para cosas como:
 | 4   | Requests (HTTP saliente): GET/POST/JSON/archivos, códigos de error, en paralelo, reintentos, autenticación | [`src/requests`](src/requests) | Listo |
 | 5   | Backend / Endpoints: web app como API REST (router, CRUD, token, subida de archivos, límites) | [`src/backend`](src/backend) | Listo |
 | 6   | HTML / UI: menú, botones en la hoja, modales, sidebar, formularios con validación, templates, CSS, página web | [`src/html`](src/html) | Listo |
-| 7   | Triggers y automatización                                                            | `src/triggers`                                                 | Pendiente |
+| 7   | Triggers y automatización: onEdit/onSelectionChange, instalables (al editar, al cambiar, por tiempo, una vez), Google Forms + al enviar | [`src/triggers`](src/triggers) | Listo |
 | 8   | Estado, concurrencia y jobs largos                                                   | `src/estado`                                                   | Pendiente |
 | 9   | Docs y Mail                                                                          | `src/docs-mail`                                                | Pendiente |
 | 10  | Avanzado                                                                             | `src/avanzado`                                                 | Pendiente |
@@ -118,6 +118,7 @@ guide-appscript/
 │   ├── requests/            # Tema 4: llamar a APIs externas (UrlFetchApp)
 │   ├── backend/             # Tema 5: el proyecto como API (doGet/doPost, router, CRUD)
 │   ├── html/                # Tema 6: menú, botones, modales, sidebar y páginas (HtmlService)
+│   ├── triggers/            # Tema 7: código que se ejecuta solo (eventos y por tiempo)
 │   └── original/            # Código original, se va migrando tema por tema
 ├── .clasp.json.example      # Ejemplo de la config local de clasp
 ├── jsconfig.json            # Autocompletado de Apps Script en VS Code

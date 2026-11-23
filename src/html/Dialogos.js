@@ -52,7 +52,9 @@ function abrirEditarCliente() {
     hojaActiva.getName() === SHEET_CLIENTES &&
     hojaActiva.getActiveCell().getRow() > 1 &&
     hojaActiva.getActiveCell().getRow() <= hojaActiva.getLastRow() &&
-    hojaActiva.getRange(hojaActiva.getActiveCell().getRow(), COL_CLIENTES.id).getValue() !== ""
+    hojaActiva
+      .getRange(hojaActiva.getActiveCell().getRow(), COL_CLIENTES.id)
+      .getValue() !== ""
   ) {
     fila = hojaActiva.getActiveCell().getRow();
   } else {
@@ -120,15 +122,29 @@ function generarReporte() {
   if (confirmacion !== ui.Button.YES) {
     return;
   }
+  armarReporte_();
+}
 
+/**
+ * Arma la hoja Reporte, SIN preguntar nada. La usan generarReporte (que
+ * antes pide confirmación) y la casilla del Panel (triggers/Simples.js),
+ * que no puede mostrar cartelitos de pregunta.
+ *
+ * @returns {boolean}  true si armó el reporte; false si no había clientes.
+ */
+function armarReporte_() {
   const spreadsheet = getGuideSpreadsheet_();
   // toast con duración -1: queda visible hasta que mostremos otro.
   spreadsheet.toast("Calculando…", "Reporte", -1);
 
   const clientes = hojaAObjetos_(spreadsheet.getSheetByName(SHEET_CLIENTES));
   if (clientes.length === 0) {
-    spreadsheet.toast("La hoja Clientes está vacía: no hay nada para reportar.", "Reporte", 5);
-    return;
+    spreadsheet.toast(
+      "La hoja Clientes está vacía: no hay nada para reportar.",
+      "Reporte",
+      5,
+    );
+    return false;
   }
   const porCiudad = {};
   for (const c of clientes) {
@@ -183,6 +199,7 @@ function generarReporte() {
     "Reporte listo",
     5,
   );
+  return true;
 }
 
 /** DEMO: un aviso simple con botón OK. */
