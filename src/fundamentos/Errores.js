@@ -11,7 +11,7 @@
  *  ¿Qué pasa con un error que nadie atrapa?
  *    - Desde el editor: aparece en rojo en el Registro de ejecución.
  *    - En un trigger instalable (los que se crean desde el menú Activadores
- *      o por código): la ejecución queda como "Fallida" en el panel
+ *      o por código): la ejecución queda con estado "Error" en el panel
  *      Ejecuciones, y Google te manda un mail con un resumen de los errores
  *      (por defecto, una vez por día; se puede cambiar en el activador).
  *    - En un trigger simple (onOpen, onEdit): falla en silencio. NO llega
@@ -127,7 +127,7 @@ function conLogDeErrores_(nombre, tarea) {
 /**
  * DEMO: usar conLogDeErrores_ para envolver una tarea.
  * Esta demo TERMINA CON ERROR a propósito: así se ve en el panel
- * Ejecuciones una ejecución "Fallida" con el detalle del error.
+ * Ejecuciones una ejecución con estado "Error" y el detalle del error.
  */
 function demo_envolverTareaConLog() {
   conLogDeErrores_("dividir por cero", () => dividir_(1, 0));
