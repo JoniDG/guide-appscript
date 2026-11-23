@@ -17,7 +17,7 @@
  *  pegada al proyecto, y que NO se sube a GitHub.
  *
  *  ¿Dónde se ven las Propiedades del script?
- *  En el editor de Apps Script: ⚙️ Configuración del proyecto (Project
+ *  En el editor de Apps Script: el ícono del engranaje, "Configuración del proyecto" (Project
  *  Settings) > abajo de todo, "Propiedades del script".
  *  Ahí podés agregar valores a mano (por ejemplo MI_API_KEY) y el
  *  código los lee con getConfig_("MI_API_KEY").
@@ -48,6 +48,9 @@ const CONFIG_KEYS = {
   // setup() con un valor al azar; lo podés ver o cambiar en las Propiedades
   // del script.
   API_TOKEN: "API_TOKEN",
+  // ID del documento plantilla de constancias (tema Docs y Mail). Lo crea
+  // solo docs-mail/Docs.js la primera vez.
+  PLANTILLA_DOC_ID: "PLANTILLA_DOC_ID",
   // URL del web app publicado (la que termina en /exec). Se agrega A MANO
   // después de publicar (ver backend/Conceptos.js).
   WEBAPP_URL: "WEBAPP_URL",

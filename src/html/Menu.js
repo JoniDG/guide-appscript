@@ -56,6 +56,13 @@ function onOpen(e) {
         .addItem("Ver estado del job", "verEstadoDelJob")
         .addItem("Cancelar job", "cancelarJobDeEjemplo"),
     )
+    .addSubMenu(
+      ui
+        .createMenu("Docs y Mail")
+        .addItem("Mandarme el mail de bienvenida (prueba)", "demo_mailDeBienvenida")
+        .addItem("Generar constancia de un cliente (Doc + PDF + mail)…", "generarConstanciaDeCliente")
+        .addItem("Crear un documento de ejemplo desde cero", "demo_documentoDesdeCero"),
+    )
     // addSeparator: una línea divisoria en el menú.
     .addSeparator()
     .addSubMenu(

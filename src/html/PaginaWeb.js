@@ -12,7 +12,7 @@
  *    .../exec?pagina=alta   -> esta página (el formulario de alta)
  *    .../exec?ruta=...      -> la API JSON del tema Backend
  *
- *  ⚠️ SEGURIDAD: LA REGLA MÁS IMPORTANTE DE LAS PÁGINAS WEB
+ *  SEGURIDAD: LA REGLA MÁS IMPORTANTE DE LAS PÁGINAS WEB
  *  Desde una página servida por este proyecto, google.script.run puede
  *  llamar a CUALQUIER función pública del proyecto (todas las que no
  *  terminan en "_"), no solo a las que usa la página. Alguien con un poco
