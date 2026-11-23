@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <!--
+    TEMPLATE DE MAIL. Ver docs-mail/Mail.js para las reglas de CSS en mails.
+
+    Dos tipos de scriptlet, con criterio:
+      - Los ESTILOS (objeto "e", ESTILOS_MAIL) son textos que escribimos
+        nosotros: se insertan SIN escapar, para que el CSS quede intacto.
+      - Los DATOS (objeto "c": nombres, emails, montos) pueden venir de un
+        usuario: se insertan ESCAPADOS, para que un "<script>" se muestre
+        como texto y no se ejecute.
+    Recordá: en un template, los scriptlets se ejecutan aunque estén dentro
+    de un comentario como este, así que acá no escribimos ninguno.
+  -->
+  <body style="margin:0;padding:0;">
+    <!-- Preencabezado: el texto gris que muestran las bandejas de entrada al
+         lado del asunto. Va oculto dentro del mail. -->
+    <div style="display:none;max-height:0;overflow:hidden;"><?= c.preencabezado ?></div>
+
+    <!-- Tabla externa al 100% para centrar; la interna mide hasta 600 px. -->
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <!-- El fondo gris va en esta celda y no en el body (Gmail descarta
+             los estilos del body). bgcolor: para los programas viejos. -->
+        <td align="center" bgcolor="#f1f3f4" style="<?!= e.fondo ?>">
+          <!-- width="600" para Outlook de escritorio; max-width (en el
+               style) para el resto. -->
+          <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="<?!= e.contenedor ?>">
+            <tr>
+              <td style="<?!= e.encabezado ?>">
+                <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                  <tr>
+                    <!-- cid:logo = la imagen incrustada que manda Mail.js -->
+                    <td style="padding-right:12px;"><img src="cid:logo" width="32" height="32" alt="" style="display:block;"></td>
+                    <td><h1 style="<?!= e.tituloEncabezado ?>"><?= c.titulo ?></h1></td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td style="<?!= e.cuerpo ?>">
+                <p style="margin:0 0 12px;"><?= c.saludo ?></p>
+                <? for (const parrafo of c.parrafos) { ?>
+                  <p style="margin:0 0 12px;"><?= parrafo ?></p>
+                <? } ?>
+
+                <? if (c.filas.length > 0) { ?>
+                  <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="<?!= e.tablaDatos ?>">
+                    <? for (const [clave, valor] of c.filas) { ?>
+                      <tr>
+                        <td style="<?!= e.celdaClave ?>"><?= clave ?></td>
+                        <td style="<?!= e.celdaValor ?>"><?= valor ?></td>
+                      </tr>
+                    <? } ?>
+                  </table>
+                <? } ?>
+
+                <? if (c.boton) { ?>
+                  <p style="margin:20px 0 0;">
+                    <a href="<?= c.boton.url ?>" style="<?!= e.boton ?>"><?= c.boton.texto ?></a>
+                  </p>
+                <? } ?>
+              </td>
+            </tr>
+            <tr>
+              <td style="<?!= e.pie ?>"><?= c.pie ?></td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

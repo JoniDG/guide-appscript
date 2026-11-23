@@ -28,10 +28,10 @@ Sirve para cosas como:
 | 6   | HTML / UI: menú, botones en la hoja, modales, sidebar, formularios con validación, templates, CSS, página web | [`src/html`](src/html) | Listo |
 | 7   | Triggers y automatización: onEdit/onSelectionChange, instalables (al editar, al cambiar, por tiempo, una vez), Google Forms + al enviar | [`src/triggers`](src/triggers) | Listo |
 | 8   | Estado, concurrencia y jobs largos: CacheService, Properties, LockService (experimento de condición de carrera), procesos de más de 6 minutos en tandas | [`src/estado`](src/estado) | Listo |
-| 9   | Docs y Mail                                                                          | `src/docs-mail`                                                | Pendiente |
+| 9   | Docs y Mail: mails con HTML y CSS en línea, documentos desde plantillas, PDF por mail, Gmail (buscar, etiquetas, borradores, adjuntos) | [`src/docs-mail`](src/docs-mail) | Listo |
 | 10  | Avanzado                                                                             | `src/avanzado`                                                 | Pendiente |
 
-La carpeta [`src/original`](src/original) tiene el código con el que empezó la guía, tal cual se escribió. Cada tema va reescribiendo y explicando su parte, hasta que esa carpeta desaparezca.
+La guía empezó a partir de un proyecto real de Apps Script, que se fue reescribiendo y explicando tema por tema. Ese código original, tal cual se escribió, se puede ver en el primer commit del repo.
 
 ## Cómo usar la guía
 
@@ -120,7 +120,7 @@ guide-appscript/
 │   ├── html/                # Tema 6: menú, botones, modales, sidebar y páginas (HtmlService)
 │   ├── triggers/            # Tema 7: código que se ejecuta solo (eventos y por tiempo)
 │   ├── estado/              # Tema 8: cache, propiedades, candados y jobs largos
-│   └── original/            # Código original, se va migrando tema por tema
+│   └── docs-mail/           # Tema 9: mails con HTML, Google Docs desde plantillas, Gmail
 ├── .clasp.json.example      # Ejemplo de la config local de clasp
 ├── jsconfig.json            # Autocompletado de Apps Script en VS Code
 └── package.json             # clasp y los tipos de Apps Script

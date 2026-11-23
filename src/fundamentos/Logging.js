@@ -11,7 +11,7 @@
  *    - Ejecutando desde el editor: en el "Registro de ejecución" que se abre
  *      abajo.
  *    - Ejecuciones que NO arrancaste vos (triggers, web app, menús): en el
- *      panel "Ejecuciones" (ícono ☰▶ en la barra izquierda del editor).
+ *      panel "Ejecuciones" (en la barra izquierda del editor).
  *      Ahí hay una fila por ejecución, con su estado, duración y mensajes.
  *    - Google Cloud Logging: si el proyecto está conectado a un proyecto de
  *      Google Cloud, los mensajes quedan guardados más tiempo y se pueden

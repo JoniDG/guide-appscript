@@ -144,7 +144,7 @@ const GUIDE_TOPICS = [
     numero: 9,
     tema: "Docs y Mail",
     carpeta: "src/docs-mail",
-    estado: "Pendiente",
+    estado: "Listo",
   },
   {
     numero: 10,
