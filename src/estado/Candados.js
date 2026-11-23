@@ -48,7 +48,10 @@
  *  API publicada (con UrlFetchApp.fetchAll), que suman 1 a dos contadores:
  *  uno sin candado y otro con candado. El de candado termina en 10; el
  *  otro, en menos (cuánto menos varía en cada corrida, según cuántos
- *  pedidos coincidan en el tiempo). Requiere el web app publicado con una
+ *  pedidos coincidan en el tiempo). En una corrida real de esta guía:
+ *  SIN candado terminó en 1 (se perdieron 9 de 10 sumas: todos leyeron
+ *  el mismo 0 casi a la vez) y CON candado en 10, a cambio de tardar
+ *  ~7,6 s en vez de ~2,5 s (los pedidos esperan su turno). Requiere el web app publicado con una
  *  versión que incluya estas rutas (ver backend/Conceptos.js).
  *
  *  Los contadores están en CELDAS de una hoja ("Contadores demo") y no en
