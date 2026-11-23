@@ -58,6 +58,9 @@ const SHEET_FUNCIONES = "Funciones personalizadas";
 // Tema HTML / UI
 const SHEET_PANEL = "Panel";
 const SHEET_REPORTE = "Reporte";
+// Tema Triggers
+const SHEET_TAREAS = "Tareas";
+const SHEET_REGISTRO_TRIGGERS = "Registro de triggers";
 const CLIENTES_HEADERS = [
   "id",
   "nombre",
@@ -82,6 +85,8 @@ const GUIDE_SHEETS = [
   { name: SHEET_PRUEBAS, headers: [] },
   { name: SHEET_FORMATO, headers: [] },
   { name: SHEET_FUNCIONES, headers: [] },
+  { name: SHEET_TAREAS, headers: ["tarea", "estado", "responsable", "hecho", "actualizado"] },
+  { name: SHEET_REGISTRO_TRIGGERS, headers: ["fecha", "origen", "detalle"] },
 ];
 
 /**
@@ -124,7 +129,7 @@ const GUIDE_TOPICS = [
     numero: 7,
     tema: "Triggers y automatización",
     carpeta: "src/triggers",
-    estado: "Pendiente",
+    estado: "Listo",
   },
   {
     numero: 8,
@@ -190,6 +195,9 @@ function setup() {
   escribirEjemplosDeFuncionesPersonalizadas_(
     spreadsheet.getSheetByName(SHEET_FUNCIONES),
   );
+
+  // Tema Triggers: tareas de ejemplo (solo si la hoja está vacía).
+  prepararHojaDeTareas_(spreadsheet.getSheetByName(SHEET_TAREAS));
 
   // Tema HTML / UI: la hoja Panel con los botones (se rearma en cada setup).
   const botones = crearPanel_();

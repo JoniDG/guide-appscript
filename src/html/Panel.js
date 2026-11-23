@@ -102,6 +102,16 @@ function crearPanel_() {
     hoja.getRange(fila, 3).setValue(boton.ayuda).setVerticalAlignment("middle").setWrap(true);
   });
 
+  // Una CASILLA que funciona como botón, también en el celular (la maneja
+  // el onEdit de triggers/Simples.js).
+  hoja.getRange("B15").setValue("Casilla como botón").setFontWeight("bold");
+  hoja
+    .getRange("B16")
+    .setValue("Funciona también en la app del celular (los botones de arriba no).")
+    .setFontColor("#5f6368");
+  hoja.getRange(CELDA_CASILLA_REPORTE).insertCheckboxes();
+  hoja.getRange(CELDA_CASILLA_REPORTE).offset(0, 1).setValue("Marcá la casilla para generar el reporte.");
+
   // Devolvemos cuántas imágenes quedaron en la hoja, para confirmar en el
   // log que los botones se insertaron.
   return hoja.getImages().length;
