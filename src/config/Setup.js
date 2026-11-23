@@ -102,7 +102,7 @@ const GUIDE_TOPICS = [
     numero: 3,
     tema: "Drive y archivos",
     carpeta: "src/drive",
-    estado: "Pendiente",
+    estado: "Listo",
   },
   {
     numero: 4,
