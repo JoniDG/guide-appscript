@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <?!= incluir_("html/vistas/estilos") ?>
+  </head>
+  <!--
+    Desde una ventana de la planilla, google.script.run corre con TU
+    sesión: no hace falta token ni hay problemas de CORS (comparalo con
+    backend/Archivos.js, que necesita las dos cosas).
+  -->
+  <body data-max-mb="<?= maxMb ?>">
+    <div id="aviso" class="aviso"></div>
+
+    <form id="formulario" novalidate>
+      <div class="campo">
+        <label for="archivo">Archivo</label>
+        <!-- accept: el selector de archivos muestra solo estos tipos. -->
+        <input type="file" id="archivo" accept="<?= tiposPermitidos.join(',') ?>">
+        <div class="ayuda">Tipos: <?= tiposPermitidos.join(", ") ?>. Máximo <?= maxMb ?> MB.
+          Ojo: en Windows, el navegador suele informar los .csv como "application/vnd.ms-excel", y entonces se rechazan.</div>
+        <div class="mensaje-error"></div>
+      </div>
+
+      <div class="botones">
+        <button type="button" onclick="google.script.host.close()">Cerrar</button>
+        <button type="submit" id="subir" class="primario">Subir</button>
+      </div>
+    </form>
+
+    <?!= incluir_("html/vistas/comun") ?>
+    <script>
+      const maxBytes = Number(document.body.dataset.maxMb) * 1024 * 1024;
+
+      document.getElementById("formulario").addEventListener("submit", async (evento) => {
+        evento.preventDefault();
+        ocultarAviso();
+        limpiarErrores();
+
+        // files: la lista de archivos elegidos (acá, uno solo).
+        const archivo = document.getElementById("archivo").files[0];
+        if (!archivo) {
+          marcarError("archivo", "Elegí un archivo.");
+          return;
+        }
+        // Chequeamos el tamaño ANTES de mandarlo: no tiene sentido subir
+        // 30 MB para que el servidor los rechace.
+        if (archivo.size > maxBytes) {
+          marcarError("archivo", `Pesa ${(archivo.size / 1024 / 1024).toFixed(1)} MB: el máximo es ${maxBytes / 1024 / 1024} MB.`);
+          return;
+        }
+
+        try {
+          const resultado = await conBotonOcupado(document.getElementById("subir"), "Subiendo…", async () => {
+            const contenido = await leerArchivoComoBase64(archivo);
+            return llamarServidor("uiSubirArchivo", {
+              nombre: archivo.name,
+              // type: el tipo que detectó el navegador (puede venir vacío).
+              mimeType: archivo.type || "application/octet-stream",
+              contenido,
+            });
+          });
+          // El link lo armamos nosotros (el nombre se escapa con textContent).
+          const nombreSeguro = document.createElement("span");
+          nombreSeguro.textContent = resultado.nombre;
+          mostrarAviso(
+            `Subido: ${nombreSeguro.innerHTML} (${(resultado.bytes / 1024).toFixed(1)} KB). <a href="${resultado.url}" target="_blank">Abrir en Drive</a>`,
+            "exito",
+            true,
+          );
+          document.getElementById("formulario").reset();
+        } catch (error) {
+          mostrarAviso(mensajeDeError(error), "error");
+        }
+      });
+    </script>
+  </body>
+</html>

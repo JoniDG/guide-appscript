@@ -25,7 +25,7 @@ Sirve para cosas como:
 | 3   | Drive y archivos: carpetas, búsqueda, blobs/base64/CSV/zip, PDF y Excel, plantillas, permisos | [`src/drive`](src/drive) | Listo |
 | 4   | Requests (HTTP saliente): GET/POST/JSON/archivos, códigos de error, en paralelo, reintentos, autenticación | [`src/requests`](src/requests) | Listo |
 | 5   | Backend / Endpoints: web app como API REST (router, CRUD, token, subida de archivos, límites) | [`src/backend`](src/backend) | Listo |
-| 6   | HTML / UI                                                                            | `src/html`                                                     | Pendiente |
+| 6   | HTML / UI: menú, botones en la hoja, modales, sidebar, formularios con validación, templates, CSS, página web | [`src/html`](src/html) | Listo |
 | 7   | Triggers y automatización                                                            | `src/triggers`                                                 | Pendiente |
 | 8   | Estado, concurrencia y jobs largos                                                   | `src/estado`                                                   | Pendiente |
 | 9   | Docs y Mail                                                                          | `src/docs-mail`                                                | Pendiente |
@@ -117,6 +117,7 @@ guide-appscript/
 │   ├── drive/               # Tema 3: Drive (carpetas, archivos, conversiones, permisos)
 │   ├── requests/            # Tema 4: llamar a APIs externas (UrlFetchApp)
 │   ├── backend/             # Tema 5: el proyecto como API (doGet/doPost, router, CRUD)
+│   ├── html/                # Tema 6: menú, botones, modales, sidebar y páginas (HtmlService)
 │   └── original/            # Código original, se va migrando tema por tema
 ├── .clasp.json.example      # Ejemplo de la config local de clasp
 ├── jsconfig.json            # Autocompletado de Apps Script en VS Code

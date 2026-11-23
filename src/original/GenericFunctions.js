@@ -11,9 +11,3 @@ function sendEmail(idEmail, data, to, asunto) {
   };
   MailApp.sendEmail(to, asunto, "", opciones);
 }
-
-function createMenu() {
-  SpreadsheetApp.getUi().createMenu('Funciones')
-    .addItem('Abrir Modal', 'showModal').addItem('Test ENABLE Funcion Automatica', "enableAutomaticFunction").addItem('Test DISABLE Funcion Automatica', "disableAutomaticFunction")
-    .addToUi();
-}

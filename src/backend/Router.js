@@ -132,6 +132,11 @@ function rutas_() {
  * @param {GoogleAppsScript.Events.DoGet} e
  */
 function doGet(e) {
+  // ?pagina=... -> una página HTML (tema HTML / UI, ver html/PaginaWeb.js).
+  // Cualquier otra cosa -> la API JSON.
+  if (e && e.parameter && e.parameter.pagina) {
+    return servirPagina_(e.parameter.pagina);
+  }
   return manejarPedido_("GET", e);
 }
 

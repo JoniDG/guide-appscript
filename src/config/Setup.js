@@ -55,6 +55,9 @@ const SHEET_CLIENTES = "Clientes";
 const SHEET_PRUEBAS = "Pruebas";
 const SHEET_FORMATO = "Formato";
 const SHEET_FUNCIONES = "Funciones personalizadas";
+// Tema HTML / UI
+const SHEET_PANEL = "Panel";
+const SHEET_REPORTE = "Reporte";
 const CLIENTES_HEADERS = [
   "id",
   "nombre",
@@ -116,7 +119,7 @@ const GUIDE_TOPICS = [
     carpeta: "src/backend",
     estado: "Listo",
   },
-  { numero: 6, tema: "HTML / UI", carpeta: "src/html", estado: "Pendiente" },
+  { numero: 6, tema: "HTML / UI", carpeta: "src/html", estado: "Listo" },
   {
     numero: 7,
     tema: "Triggers y automatización",
@@ -187,6 +190,10 @@ function setup() {
   escribirEjemplosDeFuncionesPersonalizadas_(
     spreadsheet.getSheetByName(SHEET_FUNCIONES),
   );
+
+  // Tema HTML / UI: la hoja Panel con los botones (se rearma en cada setup).
+  crearPanel_();
+  console.log(`Hoja "${SHEET_PANEL}" creada con sus botones.`);
 
   writeIndexSheet_(spreadsheet.getSheetByName(INDEX_SHEET_NAME));
   console.log(

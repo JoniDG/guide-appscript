@@ -1,0 +1,67 @@
+/**
+ * ============================================================================
+ *  HTML / UI 2: EL MENÚ PERSONALIZADO DE LA PLANILLA
+ * ============================================================================
+ *
+ *  onOpen es un "trigger simple": Google lo ejecuta SOLO cada vez que
+ *  alguien con permiso de edición abre la planilla (no hay que
+ *  configurarlo; quien solo puede ver la planilla no ve el menú). Lo usamos para
+ *  agregar un menú "Guía" en la barra de menús, al lado de "Ayuda".
+ *
+ *  Cada opción del menú ejecuta una función por su NOMBRE (un texto). Esa
+ *  función tiene que ser pública (no terminar en "_").
+ *
+ *  Como onOpen es un trigger simple, corre con permisos limitados: crear un
+ *  menú está permitido, pero no podría, por ejemplo, mandar un mail.
+ *
+ *  Si cambiás el menú, recargá la planilla (F5) para verlo.
+ *
+ *  OJO: solo puede haber UNA función onOpen en todo el proyecto. Si hubiera
+ *  dos (en archivos distintos), gana la última que se carga, sin aviso.
+ * ============================================================================
+ */
+
+/**
+ * Se ejecuta automáticamente al abrir la planilla.
+ * @param {GoogleAppsScript.Events.SheetsOnOpen} e
+ */
+function onOpen(e) {
+  const ui = SpreadsheetApp.getUi();
+  ui.createMenu("Guía")
+    // Submenú: createMenu de nuevo, y se agrega con addSubMenu.
+    .addSubMenu(
+      ui
+        .createMenu("Clientes")
+        .addItem("Nuevo cliente…", "abrirAltaCliente")
+        .addItem("Editar cliente…", "abrirEditarCliente")
+        .addItem("Buscar cliente (panel lateral)", "abrirBuscarCliente"),
+    )
+    .addItem("Subir archivo a Drive…", "abrirSubirArchivo")
+    .addItem("Generar reporte rápido", "generarReporte")
+    // addSeparator: una línea divisoria en el menú.
+    .addSeparator()
+    .addSubMenu(
+      ui
+        .createMenu("Ejemplos de mensajes")
+        .addItem("Alerta", "demo_alerta")
+        .addItem("Confirmación (Sí / No)", "demo_confirmacion")
+        .addItem("Pedir un dato", "demo_pedirDato")
+        .addItem("Aviso rápido (toast)", "demo_toast")
+        .addItem("Diálogo NO modal", "demo_dialogoNoModal")
+        .addItem("Diálogo con el CSS de Google", "demo_dialogoConCssDeGoogle"),
+    )
+    .addSeparator()
+    .addItem("Ir al Panel", "irAlPanel")
+    .addItem("Ejecutar setup()", "setup")
+    .addToUi();
+}
+
+/** Activa la hoja "Panel" (la de los botones). */
+function irAlPanel() {
+  const panel = getGuideSpreadsheet_().getSheetByName(SHEET_PANEL);
+  if (panel === null) {
+    SpreadsheetApp.getUi().alert("Todavía no existe la hoja Panel: ejecutá setup() primero (menú Guía).");
+    return;
+  }
+  panel.activate();
+}
