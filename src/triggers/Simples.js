@@ -123,7 +123,13 @@ function alEditarTareas_(e) {
 /**
  * Intenta crear una nota en Drive DESDE UN TRIGGER SIMPLE. Va a fallar
  * (los simples no pueden usar Drive) y lo dejamos registrado, para ver
- * el error real.
+ * el error real. El mensaje que da Google (comprobado probando) es:
+ *   "Los permisos especificados no son suficientes para llamar a
+ *    DriveApp.getRootFolder. Permisos necesarios:
+ *    (https://www.googleapis.com/auth/drive.readonly ||
+ *     https://www.googleapis.com/auth/drive)"
+ * O sea: el trigger simple no tiene el permiso de Drive, aunque vos sí se
+ * lo hayas dado al proyecto. Un trigger instalable sí lo tiene.
  *
  * @param {string} tarea
  */

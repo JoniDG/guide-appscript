@@ -175,7 +175,9 @@ function alEditarTareaInstalable(e) {
  * de esas cosas). e.changeType dice qué pasó:
  *   EDIT, INSERT_ROW, INSERT_COLUMN, REMOVE_ROW, REMOVE_COLUMN,
  *   INSERT_GRID (hoja nueva), REMOVE_GRID (hoja borrada), FORMAT, OTHER.
- * Ojo: no dice DÓNDE fue el cambio (no trae e.range).
+ * Ojo: no dice DÓNDE fue el cambio (no trae e.range). Y una sola acción
+ * puede disparar VARIOS eventos: al insertar una fila llegan dos, uno
+ * INSERT_ROW y otro OTHER (comprobado probando).
  *
  * @param {GoogleAppsScript.Events.SheetsOnChange} e
  */
