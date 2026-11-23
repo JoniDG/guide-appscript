@@ -12,7 +12,7 @@ function doGet(e) {
       response = router(queryParams.func, 'GET', null, null, null, null)
     }
   } else {
-    let template = HtmlService.createTemplateFromFile("home");
+    let template = HtmlService.createTemplateFromFile("original/home");
     return template.evaluate()
     //response = e
   }

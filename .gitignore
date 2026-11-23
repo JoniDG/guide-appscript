@@ -1,4 +1,6 @@
-.clasp.json
+# Configuración local de clasp: apunta al script de cada persona (ver .clasp.json.example)
+.clasp*.json
+!.clasp.json.example
 .clasprc.json
 .DS_Store
 node_modules/

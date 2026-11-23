@@ -1,0 +1,16 @@
+{
+  "name": "guide-appscript",
+  "private": true,
+  "description": "Guía práctica de Google Apps Script con ejemplos comentados",
+  "license": "MIT",
+  "scripts": {
+    "push": "clasp push",
+    "watch": "clasp push --watch",
+    "pull": "clasp pull",
+    "open": "clasp open-script"
+  },
+  "devDependencies": {
+    "@google/clasp": "^3.4.1",
+    "@types/google-apps-script": "^2.0.15"
+  }
+}
