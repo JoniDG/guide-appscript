@@ -21,8 +21,11 @@
  *
  *  ¿Es peligroso ejecutarlo varias veces?
  *  No. setup() es "idempotente": solo crea lo que falta. Si una hoja ya
- *  existe, no la toca (no borra tus datos). Si la carpeta de Drive ya
- *  existe, la reutiliza.
+ *  existe, no borra sus datos. Si la carpeta de Drive ya existe, la
+ *  reutiliza. Las únicas cosas que reescribe en cada corrida son:
+ *    - La hoja "Inicio" (el índice) y la hoja "Funciones personalizadas"
+ *      (los ejemplos), que son generadas por la guía.
+ *    - La zona horaria de la planilla, que iguala a la del proyecto.
  * ============================================================================
  */
 
@@ -42,6 +45,27 @@ const GUIDE_FOLDER_NAME = "Guía Apps Script - Archivos de prueba";
 const INDEX_SHEET_NAME = "Inicio";
 
 /**
+ * Nombres de las hojas que usa cada tema. Están acá (y no en la carpeta de
+ * cada tema) porque GUIDE_SHEETS los usa al cargarse el archivo, y Apps
+ * Script NO garantiza en qué orden carga los archivos: una constante de
+ * otro archivo podría todavía no existir en ese momento.
+ */
+// Tema Spreadsheet
+const SHEET_CLIENTES = "Clientes";
+const SHEET_PRUEBAS = "Pruebas";
+const SHEET_FORMATO = "Formato";
+const SHEET_FUNCIONES = "Funciones personalizadas";
+const CLIENTES_HEADERS = [
+  "id",
+  "nombre",
+  "email",
+  "ciudad",
+  "fecha_alta",
+  "monto",
+  "activo",
+];
+
+/**
  * Las hojas (pestañas) que necesita la guía dentro de la Spreadsheet.
  *
  * Cada tema de la guía agrega acá las hojas que usa. Cada elemento tiene:
@@ -49,7 +73,13 @@ const INDEX_SHEET_NAME = "Inicio";
  *   - headers: los títulos de la primera fila (los "encabezados").
  *              Si la hoja no necesita encabezados, se deja como [].
  */
-const GUIDE_SHEETS = [{ name: INDEX_SHEET_NAME, headers: [] }];
+const GUIDE_SHEETS = [
+  { name: INDEX_SHEET_NAME, headers: [] },
+  { name: SHEET_CLIENTES, headers: CLIENTES_HEADERS },
+  { name: SHEET_PRUEBAS, headers: [] },
+  { name: SHEET_FORMATO, headers: [] },
+  { name: SHEET_FUNCIONES, headers: [] },
+];
 
 /**
  * Los temas de la guía. Se usan para escribir el índice en la hoja "Inicio".
@@ -66,7 +96,7 @@ const GUIDE_TOPICS = [
     numero: 2,
     tema: "Spreadsheet",
     carpeta: "src/spreadsheet",
-    estado: "Pendiente",
+    estado: "Listo",
   },
   {
     numero: 3,
@@ -130,6 +160,25 @@ function setup() {
       `${created ? "Creada" : "Ya existía"}: hoja "${sheetDef.name}"`,
     );
   }
+
+  // Igualamos la zona horaria de la planilla con la del proyecto, para que
+  // las fechas que escribe el código se vean igual en las celdas (ver
+  // spreadsheet/FechasEnPlanillas.js).
+  spreadsheet.setSpreadsheetTimeZone(Session.getScriptTimeZone());
+  console.log(`Zona horaria de la planilla: ${spreadsheet.getSpreadsheetTimeZone()}`);
+
+  // Datos y ejemplos del tema Spreadsheet.
+  const cargados = poblarClientesDeEjemplo_(
+    spreadsheet.getSheetByName(SHEET_CLIENTES),
+  );
+  console.log(
+    cargados
+      ? "Cargados los clientes de ejemplo."
+      : "La hoja Clientes ya tenía datos.",
+  );
+  escribirEjemplosDeFuncionesPersonalizadas_(
+    spreadsheet.getSheetByName(SHEET_FUNCIONES),
+  );
 
   writeIndexSheet_(spreadsheet.getSheetByName(INDEX_SHEET_NAME));
   console.log(
