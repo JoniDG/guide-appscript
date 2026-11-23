@@ -12,31 +12,6 @@ function sendEmail(idEmail, data, to, asunto) {
   MailApp.sendEmail(to, asunto, "", opciones);
 }
 
-//enviarWhatsapp recibe la url del ms de whatsapp, el body que queremos enviar y to=a quien se lo queremos enviar
-function sendWhatsapp(url, bodyWpp, to) {
-  let body = {
-    "to": to,
-    "bodyMsg": bodyWpp
-  }
-  const headers = {
-    "username": "TU_USERNAME",
-    "Client-Id": "TU_CLIENT_ID",
-    "Api-Key": "TU_API_KEY"
-  }; // Encabezados personalizados si es necesario
-
-  const opciones = {
-    'method': 'post', // Método POST
-    'contentType': 'application/json', // Tipo de contenido
-    'headers': headers, // Encabezados
-    'payload': JSON.stringify(body) // Datos en formato JSON
-  };
-  let response = UrlFetchApp.fetch(url, opciones);
-  let msgResponse = response.getContentText();
-  let statusCode = response.getResponseCode()
-
-  return ({ msgResponse, statusCode })
-}
-
 function createMenu() {
   SpreadsheetApp.getUi().createMenu('Funciones')
     .addItem('Abrir Modal', 'showModal').addItem('Test ENABLE Funcion Automatica', "enableAutomaticFunction").addItem('Test DISABLE Funcion Automatica', "disableAutomaticFunction")
