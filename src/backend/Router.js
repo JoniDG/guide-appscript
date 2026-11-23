@@ -124,6 +124,10 @@ function rutas_() {
       handler: subirArchivo_,
       publica: false,
     },
+    // Tema Estado: el experimento de la condición de carrera (estado/Candados.js).
+    { metodo: "POST", ruta: "demo/contador-inseguro", handler: contadorInseguro_, publica: false },
+    { metodo: "POST", ruta: "demo/contador-seguro", handler: contadorSeguro_, publica: false },
+    { metodo: "GET", ruta: "demo/contadores", handler: verContadores_, publica: true },
   ];
 }
 
