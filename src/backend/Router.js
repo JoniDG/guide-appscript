@@ -13,10 +13,15 @@
  *      PATCH  /clientes/C00001      -> actualizarCliente_
  *      DELETE /clientes/C00001      -> borrarCliente_
  *
- *  ¿De dónde sale la ruta?
- *    - Del path: .../exec/clientes/C00001  (e.pathInfo)
- *    - O, para clientes que no pueden armar paths, del parámetro "ruta":
- *      .../exec?ruta=clientes/C00001
+ *  ¿De dónde sale la ruta? De dos lugares posibles:
+ *    - Del parámetro "ruta":  .../exec?ruta=clientes/C00001
+ *      Es la forma que funciona SIEMPRE, también para visitantes anónimos.
+ *    - Del path:              .../exec/clientes/C00001   (e.pathInfo)
+ *      Más prolija, pero OJO (comprobado probando): Google solo la deja
+ *      pasar si quien llama inició sesión en Google. Un pedido anónimo
+ *      (otro sistema, curl, UrlFetchApp, una página de un visitante sin
+ *      sesión) es redirigido a la pantalla de login y nunca llega a tu
+ *      código. Por eso, en una API pública, usá ?ruta=.
  *
  *  ¿Y PATCH / DELETE, si Apps Script solo tiene GET y POST?
  *  Se mandan como POST con el campo _method: "PATCH" en el cuerpo JSON (o

@@ -97,8 +97,8 @@ function setConfig_(key, value) {
  * desde Sheets > Extensiones > Apps Script. Por eso no necesitamos guardar
  * el ID de la Spreadsheet en ningún lado: getActiveSpreadsheet() devuelve
  * el archivo que "contiene" a este código. Funciona tanto si ejecutás desde
- * el editor como desde un activador (trigger). El caso del web app (cuando
- * el código responde a pedidos desde internet) lo vemos en el tema Backend.
+ * el editor como desde un activador (trigger) o desde el web app (cuando
+ * el código responde a pedidos desde internet, tema Backend).
  *
  * Si quisieras abrir OTRA Spreadsheet (no la que contiene al código),
  * usarías SpreadsheetApp.openById("ID") o SpreadsheetApp.openByUrl("URL").

@@ -18,10 +18,12 @@
  *  Desde una terminal, con curl. -L sigue la redirección de Google; NO
  *  agregues "-X POST": con -L, curl repetiría el POST en la redirección y
  *  fallaría (con -d, curl ya sabe que es un POST):
- *    curl -L "https://script.google.com/macros/s/<ID>/exec/clientes?ciudad=Salta&limite=2"
+ *    curl -L "https://script.google.com/macros/s/<ID>/exec?ruta=clientes&ciudad=Salta&limite=2"
  *    curl -L -H "Content-Type: text/plain" \
  *         -d '{"token":"<TOKEN>","nombre":"Ana Test","email":"ana.test@example.com"}' \
- *         "https://script.google.com/macros/s/<ID>/exec/clientes"
+ *         "https://script.google.com/macros/s/<ID>/exec?ruta=clientes"
+ *  (con ?ruta= y no con /exec/clientes: ver "¿De dónde sale la ruta?" en
+ *  Router.js)
  *
  *  El recorrido de prueba borra al final lo que crea (el cliente y el
  *  archivo subido).
@@ -195,7 +197,9 @@ function demo_simularPedidos() {
 function demo_probarApiPublicada() {
   const base = getConfig_(CONFIG_KEYS.WEBAPP_URL).replace(/\/+$/, "");
   recorridoDePrueba_((metodo, ruta, parametros = {}, cuerpo = undefined) => {
-    const url = construirUrl_(`${base}/${ruta}`, parametros);
+    // La ruta va en ?ruta= y no en el path: los pedidos sin sesión de
+    // Google (como este) a .../exec/clientes son redirigidos al login.
+    const url = construirUrl_(base, { ruta, ...parametros });
     const opciones = { method: metodo.toLowerCase() };
     if (metodo === "POST") {
       // Todo POST lleva cuerpo (aunque sea {}): algunos servidores rechazan

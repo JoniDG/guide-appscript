@@ -15,7 +15,9 @@
  *
  *  EL OBJETO "e" (lo que llega en cada pedido)
  *  Para https://script.google.com/macros/s/<ID>/exec/clientes/C00001?ciudad=Salta
- *    e.pathInfo     -> "clientes/C00001"  (lo que va después de /exec/)
+ *    e.pathInfo     -> "clientes/C00001"  (lo que va después de /exec/;
+ *                      solo llega si quien llama inició sesión en Google,
+ *                      ver Router.js)
  *    e.queryString  -> "ciudad=Salta"
  *    e.parameter    -> { ciudad: "Salta" }        (un valor por parámetro)
  *    e.parameters   -> { ciudad: ["Salta"] }      (todos, si se repiten)
@@ -70,6 +72,15 @@
  *      iniciar sesión), Cualquier persona con cuenta de Google, o Solo yo.
  *  Esta guía usa "Yo" + "Cualquier persona", que es lo que permite llamar a
  *  la API desde una página web o un sistema externo (ver appsscript.json).
+ *
+ *  OTRAS TRAMPAS DE LA URL (comprobadas probando):
+ *    - .../exec/algo (con path) pide iniciar sesión a los anónimos: usar
+ *      .../exec?ruta=algo (ver Router.js).
+ *    - .../exec/ (con la barra final) responde 404: usar .../exec, sin barra.
+ *
+ *  ¿Y la planilla? Dentro de doGet/doPost, getActiveSpreadsheet() sigue
+ *  devolviendo la planilla que contiene al código (comprobado), así que la
+ *  API lee y escribe la hoja Clientes sin necesitar su ID.
  *
  *  DOS URLs:
  *    .../exec -> la versión PUBLICADA. Para que refleje cambios del código
