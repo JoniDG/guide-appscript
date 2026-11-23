@@ -21,7 +21,7 @@ Sirve para cosas como:
 | --- | ------------------------------------------------------------------------------------ | -------------------------------------------------------------- | --------- |
 | 0   | Base: estructura, configuración y `setup()`                                          | [`src/config`](src/config)                                     | Listo     |
 | 1   | Fundamentos: ejecución, límites, logging, errores y utils (fechas, IDs, hash, texto) | [`src/fundamentos`](src/fundamentos), [`src/utils`](src/utils) | Listo     |
-| 2   | Spreadsheet                                                                          | `src/spreadsheet`                                              | Pendiente |
+| 2   | Spreadsheet: leer/escribir en bloque, filas como objetos, búsqueda en hojas grandes, formato, funciones personalizadas, fechas | [`src/spreadsheet`](src/spreadsheet) | Listo |
 | 3   | Drive y archivos                                                                     | `src/drive`                                                    | Pendiente |
 | 4   | Requests (HTTP saliente)                                                             | `src/requests`                                                 | Pendiente |
 | 5   | Backend / Endpoints                                                                  | `src/backend`                                                  | Pendiente |
@@ -111,6 +111,7 @@ guide-appscript/
 │   ├── config/              # Configuración, secretos y setup() de la guía
 │   ├── fundamentos/         # Tema 1: cómo se ejecuta, límites, logging, errores
 │   ├── utils/               # Funciones de ayuda reutilizables (fechas, IDs, hash, texto)
+│   ├── spreadsheet/         # Tema 2: planillas (leer, escribir, buscar, formato, funciones en celdas)
 │   └── original/            # Código original, se va migrando tema por tema
 ├── .clasp.json.example      # Ejemplo de la config local de clasp
 ├── jsconfig.json            # Autocompletado de Apps Script en VS Code

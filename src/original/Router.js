@@ -33,7 +33,11 @@ functionsGet["getData"] = (queryParams) => {
       }
     }
   }
-  let fila = findNumberRowData("Datos Test", filtro, columna)
+  // findNumberRowData se reemplazó por buscarFilasPorColumna_ (tema Spreadsheet).
+  // La original tenía los argumentos invertidos y devolvía números de fila en
+  // vez de filas. Este endpoint se reescribe completo en el tema Backend.
+  let filas = buscarFilasPorColumna_(getGuideSpreadsheet_().getSheetByName("Datos Test"), columna, filtro)
+  let fila = filas.length > 0 ? filas : null
   if (fila !== null) {
     if (fila.length > 1) {
       let datos = []
