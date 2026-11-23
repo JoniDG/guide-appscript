@@ -163,6 +163,10 @@ function demo_driveConvertirExcel() {
  * API de Drive se elige qué datos traer: menos datos, respuestas más
  * rápidas. La consulta (q) usa la sintaxis de la API v3 ("name", no
  * "title" como DriveApp: ver drive/Busqueda.js).
+ *
+ * Detalle comprobado: la API SÍ informa un tamaño ("size") para planillas
+ * y documentos de Google, mientras que getSize() de DriveApp da 0 para
+ * esos archivos (ver drive/CarpetasYArchivos.js).
  */
 function demo_driveListarConCampos() {
   const respuesta = Drive.Files.list({

@@ -31,6 +31,13 @@
  *    - Con demo_verPermisosDelToken, que le pregunta a Google qué permisos
  *      tiene el token con el que corre el código.
  *
+ *  Lo que se vio al correrlo en esta guía (13 permisos), dos lecciones:
+ *    - Aparece https://mail.google.com/ (acceso COMPLETO a Gmail), solo
+ *      porque docs-mail/Gmail.js existe en el proyecto.
+ *    - Aparece "presentations" (Google Slides), aunque la guía NUNCA usa
+ *      Slides: la detección automática a veces pide DE MÁS. Otro motivo
+ *      para fijar los permisos a mano en un proyecto real.
+ *
  *  Para ver o quitar los permisos que le diste a un proyecto:
  *  https://myaccount.google.com/permissions
  * ============================================================================
