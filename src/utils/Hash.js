@@ -30,8 +30,9 @@
  *  la firma justamente en un header (Stripe-Signature, X-Hub-Signature-256,
  *  x-signature...). Por eso, un web app de Apps Script solo puede verificar
  *  la firma si llega en el cuerpo del mensaje o en la URL. Si no, hace
- *  falta un intermediario que reciba el webhook y se lo reenvíe (tema
- *  Backend). HMAC sigue siendo útil para firmar mensajes ENTRE sistemas
+ *  falta un intermediario (un servidor propio o un servicio en la nube) que
+ *  reciba el webhook, verifique la firma y se lo reenvíe a Apps Script.
+ *  HMAC sigue siendo útil para firmar mensajes ENTRE sistemas
  *  tuyos, o para llamar a APIs que piden una firma (tema Requests).
  *
  *  BASE64

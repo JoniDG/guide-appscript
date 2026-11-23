@@ -114,7 +114,7 @@ const GUIDE_TOPICS = [
     numero: 5,
     tema: "Backend / Endpoints",
     carpeta: "src/backend",
-    estado: "Pendiente",
+    estado: "Listo",
   },
   { numero: 6, tema: "HTML / UI", carpeta: "src/html", estado: "Pendiente" },
   {
@@ -166,6 +166,14 @@ function setup() {
   // spreadsheet/FechasEnPlanillas.js).
   spreadsheet.setSpreadsheetTimeZone(Session.getScriptTimeZone());
   console.log(`Zona horaria de la planilla: ${spreadsheet.getSpreadsheetTimeZone()}`);
+
+  // Token de la API (tema Backend): si no existe, generamos uno al azar.
+  // No lo imprimimos en el log: se ve en Configuración del proyecto >
+  // Propiedades del script.
+  if (PropertiesService.getScriptProperties().getProperty(CONFIG_KEYS.API_TOKEN) === null) {
+    setConfig_(CONFIG_KEYS.API_TOKEN, Utilities.getUuid());
+    console.log("Creado el token de la API (API_TOKEN en las Propiedades del script).");
+  }
 
   // Datos y ejemplos del tema Spreadsheet.
   const cargados = poblarClientesDeEjemplo_(

@@ -44,6 +44,13 @@ const CONFIG_KEYS = {
   // ID de la carpeta de Drive donde la guía guarda archivos de prueba.
   // La crea automáticamente la función setup() (ver Setup.js).
   GUIDE_FOLDER_ID: "GUIDE_FOLDER_ID",
+  // Token que piden las rutas privadas de la API (tema Backend). Lo crea
+  // setup() con un valor al azar; lo podés ver o cambiar en las Propiedades
+  // del script.
+  API_TOKEN: "API_TOKEN",
+  // URL del web app publicado (la que termina en /exec). Se agrega A MANO
+  // después de publicar (ver backend/Conceptos.js).
+  WEBAPP_URL: "WEBAPP_URL",
 };
 
 /**
