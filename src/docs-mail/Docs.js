@@ -138,7 +138,13 @@ function obtenerPlantillaDeConstancia_() {
   const body = doc.getBody();
   // Un documento nuevo ya trae un párrafo vacío: lo usamos para el título
   // (si no, el documento empezaría con una línea en blanco).
-  body.getParagraphs()[0].setText("Constancia de cliente").setHeading(DocumentApp.ParagraphHeading.TITLE);
+  // OJO (comprobado probando): setText de un PÁRRAFO no devuelve el
+  // párrafo (devuelve nada), así que NO se puede encadenar
+  // .setText(...).setHeading(...): da "Cannot read properties of null".
+  // appendParagraph, en cambio, sí devuelve el párrafo y se puede encadenar.
+  const titulo = body.getParagraphs()[0];
+  titulo.setText("Constancia de cliente");
+  titulo.setHeading(DocumentApp.ParagraphHeading.TITLE);
   body
     .appendParagraph("Emitida el {{fecha_emision}}")
     .setHeading(DocumentApp.ParagraphHeading.SUBTITLE);
@@ -319,7 +325,11 @@ function demo_documentoDesdeCero() {
   );
   const body = doc.getBody();
 
-  body.getParagraphs()[0].setText("Documento generado por código").setHeading(DocumentApp.ParagraphHeading.HEADING1);
+  // El párrafo vacío que trae todo documento nuevo, como título (setText
+  // no se puede encadenar: ver obtenerPlantillaDeConstancia_).
+  const titulo = body.getParagraphs()[0];
+  titulo.setText("Documento generado por código");
+  titulo.setHeading(DocumentApp.ParagraphHeading.HEADING1);
 
   // Formato en una PARTE del texto: setBold(inicio, fin, true).
   const parrafo = body
