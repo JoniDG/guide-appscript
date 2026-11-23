@@ -7,8 +7,8 @@
  *  listas desplegables, filtros, proteger celdas...) se puede hacer por
  *  código. Útil para generar reportes que salen "lindos" automáticamente.
  *
- *  Todos los demos trabajan sobre la hoja "Formato", que se reconstruye
- *  desde cero en cada demo (ver prepararHojaDeFormato_).
+ *  Todos los demos trabajan sobre la hoja "Formato", que se borra y se
+ *  vuelve a crear en cada demo (ver prepararHojaDeFormato_).
  *
  *  Regla de rendimiento (igual que con los datos): aplicar el formato a un
  *  RANGO entero de una vez, no celda por celda.
@@ -16,36 +16,18 @@
  */
 
 /**
- * Limpia la hoja "Formato" (contenido, formato, validaciones, reglas,
+ * Recrea la hoja "Formato" desde cero (sin formato, validaciones, reglas,
  * filtros y protecciones) y le carga una tablita de ejemplo.
  *
  * @returns {GoogleAppsScript.Spreadsheet.Sheet}
  */
 function prepararHojaDeFormato_() {
-  const hoja = getGuideSpreadsheet_().getSheetByName(SHEET_FORMATO);
-
-  // clear() NO borra todo: las validaciones (y casillas), las celdas
-  // combinadas, las reglas de formato condicional, los filtros, las bandas
-  // de colores y las protecciones son "objetos" aparte que hay que sacar uno
-  // por uno. Validaciones y combinaciones se limpian sobre la hoja ENTERA
-  // (getMaxRows/getMaxColumns), no solo sobre el rango con datos.
-  const hojaEntera = hoja.getRange(
-    1,
-    1,
-    hoja.getMaxRows(),
-    hoja.getMaxColumns(),
-  );
-  hojaEntera.clearDataValidations();
-  hojaEntera.breakApart();
-  hoja.clear();
-  hoja.setConditionalFormatRules([]);
-  hoja.getBandings().forEach((banda) => banda.remove());
-  if (hoja.getFilter()) {
-    hoja.getFilter().remove();
-  }
-  hoja
-    .getProtections(SpreadsheetApp.ProtectionType.RANGE)
-    .forEach((p) => p.remove());
+  // Una hoja con formato acumula muchas cosas que hoja.clear() NO borra:
+  // validaciones y casillas, celdas combinadas, reglas de formato
+  // condicional, filtros, bandas de colores y protecciones (cada una se
+  // saca por separado). Para empezar de cero, recreamos la hoja entera
+  // (ver recrearHoja_ en LeerEscribir.js).
+  const hoja = recrearHoja_(SHEET_FORMATO);
 
   const datos = [
     ["Producto", "Categoría", "Precio", "Stock", "Vence", "Activo"],
@@ -240,7 +222,7 @@ function demo_linksYTextoEnriquecido() {
   hoja
     .getRange("H1")
     .setFormula(
-      '=HYPERLINK("https://developers.google.com/apps-script", "Documentación")',
+      `=HYPERLINK("https://developers.google.com/apps-script"${separadoresDeFormula_().argumentos} "Documentación")`,
     );
 
   // Forma 2: "rich text": un link, o partes del texto con estilos distintos.

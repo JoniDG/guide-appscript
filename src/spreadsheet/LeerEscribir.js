@@ -13,8 +13,16 @@
  *      BIEN: UN getValues para traer todo, trabajar en memoria (arrays),
  *            y UN setValues para escribir todo junto.
  *
- *  La diferencia no es chica: puede ser 100 veces más rápido. Lo medimos en
- *  demo_benchmarkLectura y demo_benchmarkEscritura.
+ *  La diferencia no es chica. Medido en esta guía con la hoja Clientes:
+ *    - Leer 300 celdas de a una: ~1.000 ms. Leer las 5.000 filas completas
+ *      de una vez: ~365 ms. Por celda, ~50 veces más rápido.
+ *    - Buscar 200 emails trayendo la hoja en cada búsqueda: ~91 segundos.
+ *      Trayéndola una sola vez: ~0,3 segundos (Busqueda.js).
+ *    - Escribir: la diferencia es menor (~2 veces), porque Apps Script
+ *      agrupa solo los setValue seguidos. Pero si entre escritura y
+ *      escritura hay una lectura, ese agrupamiento se corta y vuelve a ser
+ *      lento. Mejor no depender de eso.
+ *  Probalo con demo_benchmarkLectura y demo_benchmarkEscritura.
  *
  *  getValues() devuelve una "matriz": un array de filas, y cada fila es un
  *  array de celdas. Para la hoja:
@@ -31,16 +39,73 @@
  */
 
 /**
- * Devuelve la hoja de pruebas de escritura, vacía.
- * Los demos de este archivo escriben ahí, así nunca tocan datos reales.
+ * Borra una hoja y la vuelve a crear vacía, en la misma posición.
+ *
+ * ¿Por qué no alcanza con hoja.clear()? Lo comprobamos probando: después de
+ * clear(), algunas celdas de la hoja de pruebas SIGUIERON con el formato de
+ * fecha de un demo anterior, y un 220 se mostraba como "07/08/1900".
+ * Además clear() no saca validaciones, celdas combinadas, formato
+ * condicional, filtros, bandas de colores ni protecciones (habría que sacar
+ * cada cosa por separado). Borrar la hoja y crearla de nuevo garantiza que
+ * quede realmente vacía.
+ *
+ * Ojo: solo para hojas "de trabajo" como las de los demos. Borrar una hoja
+ * rompe las fórmulas de OTRAS hojas que la usaban, y se pierde su historial.
+ *
+ * @param {string} nombre
+ * @returns {GoogleAppsScript.Spreadsheet.Sheet}
+ */
+function recrearHoja_(nombre) {
+  const spreadsheet = getGuideSpreadsheet_();
+  const vieja = spreadsheet.getSheetByName(nombre);
+  // getIndex empieza en 1, pero insertSheet espera la posición empezando
+  // en 0: por eso el -1.
+  const posicion = vieja ? vieja.getIndex() - 1 : spreadsheet.getSheets().length;
+  if (vieja) {
+    spreadsheet.deleteSheet(vieja);
+  }
+  return spreadsheet.insertSheet(nombre, posicion);
+}
+
+/**
+ * Devuelve la hoja de pruebas de escritura, vacía de verdad.
+ * Los demos escriben ahí, así nunca tocan datos reales.
  *
  * @returns {GoogleAppsScript.Spreadsheet.Sheet}
  */
 function hojaDePruebasLimpia_() {
+  return recrearHoja_(SHEET_PRUEBAS);
+}
+
+/**
+ * Averigua qué separadores usa ESTA planilla en sus fórmulas.
+ *
+ * Los NOMBRES de las funciones en setFormula van siempre en inglés (SUM,
+ * TODAY, QUERY), pero los SEPARADORES dependen de la configuración regional
+ * de la planilla (Archivo > Configuración > Configuración regional):
+ *
+ *   Región                        Argumentos   Decimales   Ejemplo
+ *   Argentina, España, Brasil...      ;            ,       =ROUND(1,5; 0)
+ *   Estados Unidos, México...         ,            .       =ROUND(1.5, 0)
+ *
+ *  Si usás el separador equivocado, la celda muestra #ERROR!.
+ *
+ * Cómo lo averiguamos: le "preguntamos" a la planilla. Escribimos el número
+ * 1,5 en una celda y miramos cómo lo muestra: si usa coma para los
+ * decimales, los argumentos se separan con punto y coma.
+ *
+ * @returns {{argumentos: string, decimal: string}}
+ */
+function separadoresDeFormula_() {
   const hoja = getGuideSpreadsheet_().getSheetByName(SHEET_PRUEBAS);
-  // clear() borra contenido Y formato. clearContent() solo el contenido.
-  hoja.clear();
-  return hoja;
+  // Usamos la última celda de la hoja, donde ningún demo escribe.
+  const celda = hoja.getRange(hoja.getMaxRows(), hoja.getMaxColumns());
+  celda.setValue(1.5).setNumberFormat("0.0");
+  const comoSeVe = celda.getDisplayValue(); // "1,5" o "1.5"
+  celda.clear();
+  return comoSeVe.includes(",")
+    ? { argumentos: ";", decimal: "," }
+    : { argumentos: ",", decimal: "." };
 }
 
 /**
@@ -90,10 +155,10 @@ function demo_appendRow() {
 /**
  * DEMO: escribir fórmulas desde el código.
  *
- * Importante: setFormula usa SIEMPRE la sintaxis en inglés, con comas, sin
- * importar el idioma de la planilla. Aunque en tu planilla escribas
- * =SUMA(B2:B3;10), desde el código va "=SUM(B2:B3,10)". Sheets la traduce
- * sola al mostrarla.
+ * Importante: en setFormula los NOMBRES de las funciones van en inglés
+ * (=SUM, no =SUMA; Sheets los traduce solo al mostrarlos), pero los
+ * SEPARADORES de argumentos y decimales dependen de la región de la
+ * planilla. Por eso armamos las fórmulas con separadoresDeFormula_().
  */
 function demo_formulas() {
   const hoja = hojaDePruebasLimpia_();
@@ -106,13 +171,21 @@ function demo_formulas() {
   hoja.getRange("A4").setValue("Total");
   hoja.getRange("B4").setFormula("=SUM(B2:B3)");
 
+  // Fórmulas con argumentos o decimales: usamos los separadores de la
+  // planilla. En Argentina queda "=ROUND(B4*1,21; 0)".
+  const sep = separadoresDeFormula_();
+  hoja.getRange("A5").setValue("Total con IVA, redondeado");
+  hoja.getRange("B5").setFormula(`=ROUND(B4*1${sep.decimal}21${sep.argumentos} 0)`);
+
   // Para varias fórmulas de una vez: setFormulas con una matriz.
   hoja.getRange("C1").setValue("Con IVA");
-  hoja.getRange("C2:C3").setFormulas([["=B2*1.21"], ["=B3*1.21"]]);
+  hoja.getRange("C2:C3").setFormulas([[`=B2*1${sep.decimal}21`], [`=B3*1${sep.decimal}21`]]);
 
   // Leer la fórmula vs leer el resultado.
   console.log("Fórmula de B4:", hoja.getRange("B4").getFormula());
   console.log("Resultado de B4:", hoja.getRange("B4").getValue());
+  console.log("Fórmula de B5:", hoja.getRange("B5").getFormula());
+  console.log("Resultado de B5:", hoja.getRange("B5").getValue());
 }
 
 /**

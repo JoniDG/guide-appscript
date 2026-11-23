@@ -215,11 +215,14 @@ function demo_benchmarkBusqueda() {
 function demo_formulaQuery() {
   const hoja = hojaDePruebasLimpia_();
   // Clientes activos de Salta, ordenados por monto descendente, máximo 5.
-  // Recordá: setFormula va en inglés y con comas (ver LeerEscribir.js).
+  // Los separadores de argumentos dependen de la región de la planilla (ver
+  // separadoresDeFormula_ en LeerEscribir.js). Las comas DENTRO del texto de
+  // la consulta ("select A, B, F") son del lenguaje de QUERY y no cambian.
+  const s = separadoresDeFormula_().argumentos;
   hoja
     .getRange("A1")
     .setFormula(
-      `=QUERY('${SHEET_CLIENTES}'!A1:G, "select A, B, F where D = 'Salta' and G = true order by F desc limit 5", 1)`,
+      `=QUERY('${SHEET_CLIENTES}'!A1:G${s} "select A, B, F where D = 'Salta' and G = true order by F desc limit 5"${s} 1)`,
     );
   // flush: esperamos a que Sheets calcule la fórmula antes de leer.
   SpreadsheetApp.flush();

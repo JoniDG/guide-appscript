@@ -7,6 +7,7 @@
  *  igual que =SUMA() o =PROMEDIO(). Por ejemplo, con la función
  *  PRECIO_CON_IVA de abajo, en cualquier celda podés escribir:
  *      =PRECIO_CON_IVA(100; 0,21)      -> 121
+ *  (con ; y , en una planilla de Argentina; con , y . en una de EEUU)
  *
  *  Reglas y límites:
  *    - El nombre NO puede terminar en guion bajo (esas son privadas) y no
@@ -98,27 +99,20 @@ function MONTO_CON_DESCUENTO(montos, porcentaje) {
  * @param {GoogleAppsScript.Spreadsheet.Sheet} hoja
  */
 function escribirEjemplosDeFuncionesPersonalizadas_(hoja) {
+  // Los separadores dependen de la región de la planilla (ver
+  // separadoresDeFormula_ en spreadsheet/LeerEscribir.js).
+  const { argumentos: a, decimal: d } = separadoresDeFormula_();
   hoja.clear();
-  // setFormula: en inglés y con comas, aunque la planilla esté en español.
-  const ejemplos = [
-    ["Fórmula", "Resultado"],
-    ["=PRECIO_CON_IVA(100)", "=PRECIO_CON_IVA(100)"],
-    ["=PRECIO_CON_IVA(100, 0.105)", "=PRECIO_CON_IVA(100, 0.105)"],
-    [
-      '=NORMALIZAR_TEXTO("  José  PÉREZ ")',
-      '=NORMALIZAR_TEXTO("  José  PÉREZ ")',
-    ],
-    [
-      `=MONTO_CON_DESCUENTO('${SHEET_CLIENTES}'!F2:F6, 0.1)`,
-      `=MONTO_CON_DESCUENTO('${SHEET_CLIENTES}'!F2:F6, 0.1)`,
-    ],
+  const formulas = [
+    "=PRECIO_CON_IVA(100)",
+    `=PRECIO_CON_IVA(100${a} 0${d}105)`,
+    '=NORMALIZAR_TEXTO("  José  PÉREZ ")',
+    `=MONTO_CON_DESCUENTO('${SHEET_CLIENTES}'!F2:F6${a} 0${d}1)`,
   ];
   // Columna A: el texto de la fórmula (con un apóstrofe adelante para que
   // Sheets lo muestre como texto y no lo calcule). Columna B: la fórmula real.
-  const columnaA = ejemplos.map((fila, i) => [
-    i === 0 ? fila[0] : `'${fila[0]}`,
-  ]);
-  const columnaB = ejemplos.slice(1).map((fila) => [fila[1]]);
+  const columnaA = [["Fórmula"], ...formulas.map((f) => [`'${f}`])];
+  const columnaB = formulas.map((f) => [f]);
   hoja.getRange(1, 1, columnaA.length, 1).setValues(columnaA);
   hoja.getRange("B1").setValue("Resultado");
   hoja.getRange(2, 2, columnaB.length, 1).setFormulas(columnaB);
