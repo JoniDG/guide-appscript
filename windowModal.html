@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <base target="_top">
+</head>
+
+<body>
+  <form>
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" name="nombre"><br><br>
+    <label for="apellido">Apellido:</label>
+    <input type="text" id="apellido" name="apellido"><br><br>
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email"><br><br>
+    <input type="button" value="Enviar" onclick="google.script.run.saveDataModal(nombre.value, apellido.value, email.value); cerrarModal()">
+  </form>
+  <script>
+    function cerrarModal() {
+      // Agregar un retraso de 2 segundos antes de cerrar
+      setTimeout(function() {
+        google.script.host.close();
+      }, 2000); // 2000 milisegundos = 2 segundos
+    }
+  </script>
+</body>
+
+</html>
