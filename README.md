@@ -17,19 +17,19 @@ Sirve para cosas como:
 
 ## Temas
 
-| #   | Tema                                        | Carpeta                    | Estado    |
-| --- | ------------------------------------------- | -------------------------- | --------- |
-| 0   | Base: estructura, configuración y `setup()` | [`src/config`](src/config) | Listo     |
-| 1   | Fundamentos                                 | `src/fundamentos`          | Pendiente |
-| 2   | Spreadsheet                                 | `src/spreadsheet`          | Pendiente |
-| 3   | Drive y archivos                            | `src/drive`                | Pendiente |
-| 4   | Requests (HTTP saliente)                    | `src/requests`             | Pendiente |
-| 5   | Backend / Endpoints                         | `src/backend`              | Pendiente |
-| 6   | HTML / UI                                   | `src/html`                 | Pendiente |
-| 7   | Triggers y automatización                   | `src/triggers`             | Pendiente |
-| 8   | Estado, concurrencia y jobs largos          | `src/estado`               | Pendiente |
-| 9   | Docs y Mail                                 | `src/docs-mail`            | Pendiente |
-| 10  | Avanzado                                    | `src/avanzado`             | Pendiente |
+| #   | Tema                                                                                 | Carpeta                                                        | Estado    |
+| --- | ------------------------------------------------------------------------------------ | -------------------------------------------------------------- | --------- |
+| 0   | Base: estructura, configuración y `setup()`                                          | [`src/config`](src/config)                                     | Listo     |
+| 1   | Fundamentos: ejecución, límites, logging, errores y utils (fechas, IDs, hash, texto) | [`src/fundamentos`](src/fundamentos), [`src/utils`](src/utils) | Listo     |
+| 2   | Spreadsheet                                                                          | `src/spreadsheet`                                              | Pendiente |
+| 3   | Drive y archivos                                                                     | `src/drive`                                                    | Pendiente |
+| 4   | Requests (HTTP saliente)                                                             | `src/requests`                                                 | Pendiente |
+| 5   | Backend / Endpoints                                                                  | `src/backend`                                                  | Pendiente |
+| 6   | HTML / UI                                                                            | `src/html`                                                     | Pendiente |
+| 7   | Triggers y automatización                                                            | `src/triggers`                                                 | Pendiente |
+| 8   | Estado, concurrencia y jobs largos                                                   | `src/estado`                                                   | Pendiente |
+| 9   | Docs y Mail                                                                          | `src/docs-mail`                                                | Pendiente |
+| 10  | Avanzado                                                                             | `src/avanzado`                                                 | Pendiente |
 
 La carpeta [`src/original`](src/original) tiene el código con el que empezó la guía, tal cual se escribió. Cada tema va reescribiendo y explicando su parte, hasta que esa carpeta desaparezca.
 
@@ -109,6 +109,8 @@ guide-appscript/
 ├── src/                     # Todo lo que se sube a Apps Script (rootDir de clasp)
 │   ├── appsscript.json      # "Manifest": zona horaria, permisos, config del web app
 │   ├── config/              # Configuración, secretos y setup() de la guía
+│   ├── fundamentos/         # Tema 1: cómo se ejecuta, límites, logging, errores
+│   ├── utils/               # Funciones de ayuda reutilizables (fechas, IDs, hash, texto)
 │   └── original/            # Código original, se va migrando tema por tema
 ├── .clasp.json.example      # Ejemplo de la config local de clasp
 ├── jsconfig.json            # Autocompletado de Apps Script en VS Code
