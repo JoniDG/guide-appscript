@@ -150,7 +150,7 @@ const GUIDE_TOPICS = [
     numero: 10,
     tema: "Avanzado",
     carpeta: "src/avanzado",
-    estado: "Pendiente",
+    estado: "Listo",
   },
 ];
 
