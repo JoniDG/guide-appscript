@@ -63,6 +63,13 @@ function onOpen(e) {
         .addItem("Generar constancia de un cliente (Doc + PDF + mail)…", "generarConstanciaDeCliente")
         .addItem("Crear un documento de ejemplo desde cero", "demo_documentoDesdeCero"),
     )
+    .addSubMenu(
+      ui
+        .createMenu("Avanzado")
+        .addItem("Correr los tests de la guía", "runAllTests")
+        .addItem("Leer varios rangos con la API de Sheets", "demo_sheetsLeerVariosRangos")
+        .addItem("Convertir un Excel a planilla (API de Drive)", "demo_driveConvertirExcel"),
+    )
     // addSeparator: una línea divisoria en el menú.
     .addSeparator()
     .addSubMenu(

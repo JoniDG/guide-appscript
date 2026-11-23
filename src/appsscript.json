@@ -1,7 +1,18 @@
 {
   "timeZone": "America/Argentina/Buenos_Aires",
   "dependencies": {
-    "enabledAdvancedServices": []
+    "enabledAdvancedServices": [
+      {
+        "userSymbol": "Sheets",
+        "serviceId": "sheets",
+        "version": "v4"
+      },
+      {
+        "userSymbol": "Drive",
+        "serviceId": "drive",
+        "version": "v3"
+      }
+    ]
   },
   "exceptionLogging": "STACKDRIVER",
   "runtimeVersion": "V8",

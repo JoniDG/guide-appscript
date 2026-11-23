@@ -29,7 +29,7 @@ Sirve para cosas como:
 | 7   | Triggers y automatización: onEdit/onSelectionChange, instalables (al editar, al cambiar, por tiempo, una vez), Google Forms + al enviar | [`src/triggers`](src/triggers) | Listo |
 | 8   | Estado, concurrencia y jobs largos: CacheService, Properties, LockService (experimento de condición de carrera), procesos de más de 6 minutos en tandas | [`src/estado`](src/estado) | Listo |
 | 9   | Docs y Mail: mails con HTML y CSS en línea, documentos desde plantillas, PDF por mail, Gmail (buscar, etiquetas, borradores, adjuntos) | [`src/docs-mail`](src/docs-mail) | Listo |
-| 10  | Avanzado                                                                             | `src/avanzado`                                                 | Pendiente |
+| 10  | Avanzado: servicios avanzados (APIs de Sheets y Drive), permisos, bibliotecas, OAuth2, tests | [`src/avanzado`](src/avanzado) | Listo |
 
 La guía empezó a partir de un proyecto real de Apps Script, que se fue reescribiendo y explicando tema por tema. Ese código original, tal cual se escribió, se puede ver en el primer commit del repo.
 
@@ -120,7 +120,9 @@ guide-appscript/
 │   ├── html/                # Tema 6: menú, botones, modales, sidebar y páginas (HtmlService)
 │   ├── triggers/            # Tema 7: código que se ejecuta solo (eventos y por tiempo)
 │   ├── estado/              # Tema 8: cache, propiedades, candados y jobs largos
-│   └── docs-mail/           # Tema 9: mails con HTML, Google Docs desde plantillas, Gmail
+│   ├── docs-mail/           # Tema 9: mails con HTML, Google Docs desde plantillas, Gmail
+│   └── avanzado/            # Tema 10: APIs completas, permisos, bibliotecas, OAuth2, tests
+├── tests/                   # Tests que corren en la compu, sin Google (npm test)
 ├── .clasp.json.example      # Ejemplo de la config local de clasp
 ├── jsconfig.json            # Autocompletado de Apps Script en VS Code
 └── package.json             # clasp y los tipos de Apps Script
@@ -143,6 +145,7 @@ En el editor online, las carpetas aparecen como parte del nombre del archivo: `c
 | `npm run watch` | Igual que `push`, pero automático cada vez que guardás un archivo |
 | `npm run pull`  | Baja los cambios hechos en el editor online (pisa los locales)    |
 | `npm run open`  | Abre el editor de Apps Script en el navegador                     |
+| `npm test`      | Corre en la compu los tests de las funciones que no usan Google   |
 
 Si editás en los dos lados (online y local), hacé `pull` antes de `push`: `push` reemplaza lo que haya online.
 
