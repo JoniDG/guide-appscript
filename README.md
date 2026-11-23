@@ -23,7 +23,7 @@ Sirve para cosas como:
 | 1   | Fundamentos: ejecución, límites, logging, errores y utils (fechas, IDs, hash, texto) | [`src/fundamentos`](src/fundamentos), [`src/utils`](src/utils) | Listo     |
 | 2   | Spreadsheet: leer/escribir en bloque, filas como objetos, búsqueda en hojas grandes, formato, funciones personalizadas, fechas | [`src/spreadsheet`](src/spreadsheet) | Listo |
 | 3   | Drive y archivos: carpetas, búsqueda, blobs/base64/CSV/zip, PDF y Excel, plantillas, permisos | [`src/drive`](src/drive) | Listo |
-| 4   | Requests (HTTP saliente)                                                             | `src/requests`                                                 | Pendiente |
+| 4   | Requests (HTTP saliente): GET/POST/JSON/archivos, códigos de error, en paralelo, reintentos, autenticación, WhatsApp | [`src/requests`](src/requests) | Listo |
 | 5   | Backend / Endpoints                                                                  | `src/backend`                                                  | Pendiente |
 | 6   | HTML / UI                                                                            | `src/html`                                                     | Pendiente |
 | 7   | Triggers y automatización                                                            | `src/triggers`                                                 | Pendiente |
@@ -113,6 +113,7 @@ guide-appscript/
 │   ├── utils/               # Funciones de ayuda reutilizables (fechas, IDs, hash, texto)
 │   ├── spreadsheet/         # Tema 2: planillas (leer, escribir, buscar, formato, funciones en celdas)
 │   ├── drive/               # Tema 3: Drive (carpetas, archivos, conversiones, permisos)
+│   ├── requests/            # Tema 4: llamar a APIs externas (UrlFetchApp)
 │   └── original/            # Código original, se va migrando tema por tema
 ├── .clasp.json.example      # Ejemplo de la config local de clasp
 ├── jsconfig.json            # Autocompletado de Apps Script en VS Code

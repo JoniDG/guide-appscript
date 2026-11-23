@@ -108,7 +108,7 @@ const GUIDE_TOPICS = [
     numero: 4,
     tema: "Requests (HTTP saliente)",
     carpeta: "src/requests",
-    estado: "Pendiente",
+    estado: "Listo",
   },
   {
     numero: 5,
