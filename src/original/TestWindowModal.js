@@ -3,11 +3,11 @@ function onOpen(){
 }
 function showModal() {
   let ui = SpreadsheetApp.getUi();
-  ui.showModalDialog(HtmlService.createHtmlOutputFromFile('windowModal'), 'Mi Formulario');
+  ui.showModalDialog(HtmlService.createHtmlOutputFromFile('original/windowModal'), 'Mi Formulario');
 }
 
 function getHtml() {
-  let html = HtmlService.createHtmlOutputFromFile('windowModal'); // Asume que tienes un archivo HTML llamado 'windowModal'
+  let html = HtmlService.createHtmlOutputFromFile('original/windowModal'); // Asume que tienes un archivo HTML llamado 'windowModal'
   return html.setTitle('Mi Formulario Modal');
 }
 
