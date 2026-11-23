@@ -27,6 +27,8 @@
  *       como "Guia.formatearMontoArgentino is not a function", porque esa
  *       función todavía no existía en la foto.
  *    2. Desde ese proyecto: Guia.formatearMontoArgentino(1878.3)
+ *       (Comprobado: esta guía, que es un proyecto LIGADO a una planilla,
+ *       funciona como biblioteca desde un proyecto independiente.)
  *
  *  REGLAS
  *    - Solo se ven las funciones PÚBLICAS (las que no terminan en "_").
