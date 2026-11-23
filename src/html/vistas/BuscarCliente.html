@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <?!= incluir_("html/vistas/estilos") ?>
+  </head>
+  <!-- BARRA LATERAL: tiene ancho fijo (~300 px), así que el diseño es en
+       una sola columna. -->
+  <body>
+    <div class="campo">
+      <label for="busqueda">Buscar por nombre, email, ID o ciudad</label>
+      <input type="search" id="busqueda" placeholder="Ej: gomez, C00010, salta…" autofocus>
+    </div>
+    <div id="estado" class="estado">Escribí al menos 2 letras.</div>
+    <div id="resultados"></div>
+
+    <?!= incluir_("html/vistas/comun") ?>
+    <script>
+      const entrada = document.getElementById("busqueda");
+      const estado = document.getElementById("estado");
+      const contenedor = document.getElementById("resultados");
+
+      // "Debounce": esperamos a que la persona deje de escribir 300 ms antes
+      // de buscar. Si no, haríamos una búsqueda por cada letra.
+      let temporizador = null;
+      // Número de la última búsqueda: si llega tarde la respuesta de una
+      // búsqueda vieja, la ignoramos (si no, podría pisar a la nueva).
+      let ultimaBusqueda = 0;
+
+      entrada.addEventListener("input", () => {
+        clearTimeout(temporizador);
+        temporizador = setTimeout(buscar, 300);
+      });
+
+      async function buscar() {
+        const texto = entrada.value.trim();
+        // Numeramos CADA búsqueda (también las cortas), así una respuesta
+        // vieja que llegue tarde nunca pisa lo que se ve ahora.
+        const numero = ++ultimaBusqueda;
+        if (texto.length < 2) {
+          estado.textContent = "Escribí al menos 2 letras.";
+          contenedor.innerHTML = "";
+          return;
+        }
+        estado.innerHTML = '<span class="spinner"></span>Buscando…';
+        try {
+          const { total, resultados } = await llamarServidor("uiBuscarClientes", texto);
+          if (numero !== ultimaBusqueda) {
+            return; // ya hay una búsqueda más nueva
+          }
+          estado.textContent =
+            total === 0
+              ? "No hay resultados."
+              : `${total} resultado${total === 1 ? "" : "s"}${total > resultados.length ? ` (se muestran ${resultados.length})` : ""}. Clic para ir a la fila.`;
+          mostrarResultados(resultados);
+        } catch (error) {
+          if (numero !== ultimaBusqueda) {
+            return;
+          }
+          estado.textContent = `Error: ${mensajeDeError(error)}`;
+        }
+      }
+
+      function mostrarResultados(resultados) {
+        contenedor.innerHTML = "";
+        for (const cliente of resultados) {
+          // Armamos cada tarjeta con createElement y textContent (no con
+          // innerHTML): así un nombre "raro" nunca se interpreta como HTML.
+          const tarjeta = document.createElement("div");
+          tarjeta.className = "tarjeta";
+
+          const nombre = document.createElement("div");
+          nombre.className = "nombre";
+          nombre.textContent = cliente.nombre;
+          const etiqueta = document.createElement("span");
+          etiqueta.className = `etiqueta ${cliente.activo ? "activo" : "inactivo"}`;
+          etiqueta.textContent = cliente.activo ? "activo" : "inactivo";
+          nombre.appendChild(etiqueta);
+
+          const detalle = document.createElement("div");
+          detalle.className = "detalle";
+          detalle.textContent = `${cliente.id} · ${cliente.ciudad} · ${cliente.email}`;
+
+          tarjeta.append(nombre, detalle);
+          tarjeta.addEventListener("click", () => llamarServidor("uiIrAFila", cliente.fila));
+          contenedor.appendChild(tarjeta);
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,96 @@
+<!--
+  JAVASCRIPT COMPARTIDO por todas las ventanas (corre en el NAVEGADOR).
+  Cada ventana lo incluye con un scriptlet que llama a
+  incluir_("html/vistas/comun") (ver html/Conceptos.js).
+-->
+<script>
+  /**
+   * Llama a una función del servidor y devuelve una Promesa, para poder
+   * usar "await" en lugar de los callbacks de google.script.run.
+   *
+   *   Forma "clásica" de google.script.run:
+   *     google.script.run
+   *       .withSuccessHandler(resultado => ...)   // si salió bien
+   *       .withFailureHandler(error => ...)       // si el servidor tiró error
+   *       .uiGuardarCliente(datos);
+   *
+   *   Con este helper:
+   *     const resultado = await llamarServidor("uiGuardarCliente", datos);
+   *
+   * google.script.run[nombre] busca la función por su nombre (un texto).
+   */
+  function llamarServidor(nombreFuncion, ...argumentos) {
+    return new Promise((resolver, rechazar) => {
+      google.script.run
+        .withSuccessHandler(resolver)
+        .withFailureHandler(rechazar)
+        [nombreFuncion](...argumentos);
+    });
+  }
+
+  /** Muestra un aviso arriba del formulario. tipo: "error" o "exito". */
+  function mostrarAviso(texto, tipo, html = false) {
+    const aviso = document.getElementById("aviso");
+    // textContent pone el texto TAL CUAL (seguro). innerHTML lo interpreta
+    // como HTML: solo lo usamos con HTML que armamos nosotros (un link).
+    if (html) {
+      aviso.innerHTML = texto;
+    } else {
+      aviso.textContent = texto;
+    }
+    aviso.className = `aviso visible ${tipo}`;
+  }
+
+  function ocultarAviso() {
+    document.getElementById("aviso").className = "aviso";
+  }
+
+  /** Marca un campo con error y muestra el mensaje debajo. */
+  function marcarError(idCampo, mensaje) {
+    const campo = document.getElementById(idCampo).closest(".campo");
+    campo.classList.add("con-error");
+    campo.querySelector(".mensaje-error").textContent = mensaje;
+  }
+
+  function limpiarErrores() {
+    document.querySelectorAll(".campo.con-error").forEach((c) => c.classList.remove("con-error"));
+  }
+
+  /**
+   * Deshabilita el botón y le pone una ruedita mientras dura "tarea". Así
+   * la persona ve que algo está pasando, y no puede hacer clic dos veces
+   * (lo que crearía el cliente dos veces).
+   */
+  async function conBotonOcupado(boton, textoOcupado, tarea) {
+    const textoOriginal = boton.innerHTML;
+    boton.disabled = true;
+    boton.innerHTML = `<span class="spinner"></span>${textoOcupado}`;
+    try {
+      return await tarea();
+    } finally {
+      boton.disabled = false;
+      boton.innerHTML = textoOriginal;
+    }
+  }
+
+  /**
+   * Lee un archivo elegido por la persona y devuelve su contenido en base64
+   * (sin el prefijo "data:...;base64,").
+   */
+  function leerArchivoComoBase64(archivo) {
+    return new Promise((resolver, rechazar) => {
+      const lector = new FileReader();
+      lector.onload = () => resolver(lector.result.split(",")[1]);
+      lector.onerror = () => rechazar(lector.error);
+      lector.readAsDataURL(archivo);
+    });
+  }
+
+  /**
+   * El mensaje de un error que vino del servidor. A veces Google le agrega
+   * un prefijo como "Error: " o "Exception: ": se lo sacamos.
+   */
+  function mensajeDeError(error) {
+    return String(error && error.message ? error.message : error).replace(/^(Error|Exception):\s*/, "");
+  }
+</script>
