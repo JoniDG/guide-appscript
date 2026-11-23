@@ -157,7 +157,7 @@ function validateFiles(files) {
 function uploadFile(fileBase64, mimeType, filename) {
   let fileDecoded = Utilities.base64Decode(fileBase64, Utilities.Charset.UTF_8);
   if (filename === "") {
-    filename = randomString(5)
+    filename = generarCodigoCorto_(5)
   }
   let blob = Utilities.newBlob(fileDecoded, mimeType, filename);
   let drive = DriveApp.getFolderById(testFolderDriveId)

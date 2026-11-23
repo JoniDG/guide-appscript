@@ -59,8 +59,8 @@ const GUIDE_TOPICS = [
   {
     numero: 1,
     tema: "Fundamentos",
-    carpeta: "src/fundamentos",
-    estado: "Pendiente",
+    carpeta: "src/fundamentos y src/utils",
+    estado: "Listo",
   },
   {
     numero: 2,

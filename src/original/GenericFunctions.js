@@ -91,68 +91,6 @@ function sendEmail(idEmail, data, to, asunto) {
   MailApp.sendEmail(to, asunto, "", opciones);
 }
 
-//data = fecha = dia/mes/año | data = hora = hrs:min | data = fechayhora = dia/mes/año hrs:min
-function getDate(data) {
-  const ahora = new Date();
-
-  const dia = ahora.getDate().toString().padStart(2, "0");
-  const mes = (ahora.getMonth() + 1).toString().padStart(2, "0");
-  const anio = ahora.getFullYear();
-
-  const horas = ahora.getHours().toString().padStart(2, "0");
-  const minutos = ahora.getMinutes().toString().padStart(2, "0");
-  const segundos = ahora.getSeconds().toString().padStart(2, "0")
-
-
-  switch (data) {
-    case "dia":
-      return dia
-    case "mes":
-      return mes
-    case "año":
-      return anio
-    case "fecha":
-      return `${dia}/${mes}/${anio}`
-    case "hora":
-      return `${horas}`
-    case "minutos":
-      return minutos
-    case "segundos":
-      return segundos
-    
-    case "horamin":
-    return `${horas}:${minutos}hs`
-    case "horaminseg":
-    return `${horas}:${minutos}:${segundos}hs`
-    case "fechayhora":
-      return `${dia}/${mes}/${anio} ${horas}:${minutos}hs`
-    case "fechaCompleta":
-      return `${dia}/${mes}/${anio} ${horas}:${minutos}:${segundos}hs`
-    default: console.log("Que queres obtener")
-      return "No se especifico"
-  }
-}
-
-//fecha1 = "14/10/2024"
-//fecha2 = "14/10/2023"
-//La funcion devuelva la cantidad de dias que pasaron entre la fecha 1 y la fecha 2 (en el ejemplo devuelve 366)
-function daysBetweenDates(fecha1, fecha2) {
-  // Convertir las fechas de string a objetos Date
-  let [dia1, mes1, año1] = fecha1.split('/').map(Number);
-  let [dia2, mes2, año2] = fecha2.split('/').map(Number);
-
-  let fechaObj1 = new Date(año1, mes1 - 1, dia1); // Restar 1 al mes porque los meses en JS empiezan desde 0
-  let fechaObj2 = new Date(año2, mes2 - 1, dia2);
-
-  // Calcular la diferencia en milisegundos
-  let diferenciaTiempo = fechaObj1 - fechaObj2;
-
-  // Convertir la diferencia de milisegundos a días
-  let diferenciaDias = Math.floor(diferenciaTiempo / (1000 * 60 * 60 * 24));
-
-  return diferenciaDias;
-}
-
 //enviarWhatsapp recibe la url del ms de whatsapp, el body que queremos enviar y to=a quien se lo queremos enviar
 function sendWhatsapp(url, bodyWpp, to) {
   let body = {
@@ -182,39 +120,4 @@ function createMenu() {
   SpreadsheetApp.getUi().createMenu('Funciones')
     .addItem('Abrir Modal', 'showModal').addItem('Test ENABLE Funcion Automatica', "enableAutomaticFunction").addItem('Test DISABLE Funcion Automatica', "disableAutomaticFunction")
     .addToUi();
-}
-
-function randomString(longitud) {
-  const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  let resultado = '';
-  const caracteresLength = caracteres.length;
-  for (let i = 0; i < longitud; i++) {
-    resultado += caracteres.charAt(Math.floor(Math.random() * caracteresLength));
-  }
-  return resultado;
-
-}
-
-function findNumberInBrackets(str) {
-  // Expresión regular para buscar un número dentro de corchetes []
-  const regex = /\[(\d+)\]/;
-  // Aplicamos la expresión regular al string dado
-  const match = str.match(regex);
-  // Si match no es null y tiene un grupo de captura (es decir, hay un número dentro de corchetes)
-  if (match && match[1]) {
-    // Devolvemos el número encontrado dentro de los corchetes
-    return match[1];
-  } else {
-    // En caso contrario, devolvemos null o cualquier valor que indique que no se encontró un número dentro de los corchetes
-    return null;
-  }
-}
-
-function generateID(cel) {
-  // Convertir el número a string y luego usar slice para obtener los últimos seis dígitos
-  let numeroString = cel.toString();
-  let ultimosSeisDigitos = numeroString.slice(-6);
-
-  // Devolver los últimos seis dígitos como un número
-  return parseInt(ultimosSeisDigitos, 10);
 }
