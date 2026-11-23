@@ -24,7 +24,7 @@ Sirve para cosas como:
 | 2   | Spreadsheet: leer/escribir en bloque, filas como objetos, búsqueda en hojas grandes, formato, funciones personalizadas, fechas | [`src/spreadsheet`](src/spreadsheet) | Listo |
 | 3   | Drive y archivos: carpetas, búsqueda, blobs/base64/CSV/zip, PDF y Excel, plantillas, permisos | [`src/drive`](src/drive) | Listo |
 | 4   | Requests (HTTP saliente): GET/POST/JSON/archivos, códigos de error, en paralelo, reintentos, autenticación | [`src/requests`](src/requests) | Listo |
-| 5   | Backend / Endpoints                                                                  | `src/backend`                                                  | Pendiente |
+| 5   | Backend / Endpoints: web app como API REST (router, CRUD, token, subida de archivos, límites) | [`src/backend`](src/backend) | Listo |
 | 6   | HTML / UI                                                                            | `src/html`                                                     | Pendiente |
 | 7   | Triggers y automatización                                                            | `src/triggers`                                                 | Pendiente |
 | 8   | Estado, concurrencia y jobs largos                                                   | `src/estado`                                                   | Pendiente |
@@ -100,7 +100,9 @@ Así podés ejecutar los ejemplos en tu cuenta de Google.
 
    Es normal: el script es tuyo y no pasó por la verificación de Google, que solo hace falta para apps públicas.
 
-6. Listo. `setup()` creó las hojas que usa la guía y una carpeta en tu Drive. Mirá la hoja **Inicio** de la Spreadsheet.
+6. Listo. `setup()` creó las hojas que usa la guía, una carpeta en tu Drive y el token de la API (`API_TOKEN`, en las Propiedades del script). Mirá la hoja **Inicio** de la Spreadsheet.
+
+Cada vez que se agrega un tema nuevo, volvé a correr `setup()`: crea solo lo que falta. Para el tema Backend hay además un paso manual (publicar el web app y guardar su URL en la propiedad `WEBAPP_URL`), explicado en [`src/backend/Conceptos.js`](src/backend/Conceptos.js).
 
 ## Estructura del repo
 
@@ -114,6 +116,7 @@ guide-appscript/
 │   ├── spreadsheet/         # Tema 2: planillas (leer, escribir, buscar, formato, funciones en celdas)
 │   ├── drive/               # Tema 3: Drive (carpetas, archivos, conversiones, permisos)
 │   ├── requests/            # Tema 4: llamar a APIs externas (UrlFetchApp)
+│   ├── backend/             # Tema 5: el proyecto como API (doGet/doPost, router, CRUD)
 │   └── original/            # Código original, se va migrando tema por tema
 ├── .clasp.json.example      # Ejemplo de la config local de clasp
 ├── jsconfig.json            # Autocompletado de Apps Script en VS Code

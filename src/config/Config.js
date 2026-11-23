@@ -44,6 +44,13 @@ const CONFIG_KEYS = {
   // ID de la carpeta de Drive donde la guía guarda archivos de prueba.
   // La crea automáticamente la función setup() (ver Setup.js).
   GUIDE_FOLDER_ID: "GUIDE_FOLDER_ID",
+  // Token que piden las rutas privadas de la API (tema Backend). Lo crea
+  // setup() con un valor al azar; lo podés ver o cambiar en las Propiedades
+  // del script.
+  API_TOKEN: "API_TOKEN",
+  // URL del web app publicado (la que termina en /exec). Se agrega A MANO
+  // después de publicar (ver backend/Conceptos.js).
+  WEBAPP_URL: "WEBAPP_URL",
 };
 
 /**
@@ -90,8 +97,8 @@ function setConfig_(key, value) {
  * desde Sheets > Extensiones > Apps Script. Por eso no necesitamos guardar
  * el ID de la Spreadsheet en ningún lado: getActiveSpreadsheet() devuelve
  * el archivo que "contiene" a este código. Funciona tanto si ejecutás desde
- * el editor como desde un activador (trigger). El caso del web app (cuando
- * el código responde a pedidos desde internet) lo vemos en el tema Backend.
+ * el editor como desde un activador (trigger) o desde el web app (cuando
+ * el código responde a pedidos desde internet, tema Backend).
  *
  * Si quisieras abrir OTRA Spreadsheet (no la que contiene al código),
  * usarías SpreadsheetApp.openById("ID") o SpreadsheetApp.openByUrl("URL").
