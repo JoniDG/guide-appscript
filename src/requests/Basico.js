@@ -7,7 +7,8 @@
  *  Es la forma en que dos sistemas se hablan por internet. Tu código le
  *  manda un pedido a una URL ("dame los datos del cliente 5", "guardá este
  *  pedido") y el otro sistema contesta con una RESPUESTA. Así funcionan las
- *  APIs: la de Mercado Pago, la de WhatsApp, la de tu propio backend.
+ *  APIs: la de un sistema de pagos, la de un servicio de mensajes, la de tu
+ *  propio backend.
  *
  *  Un pedido tiene:
  *    - Un MÉTODO, que dice qué queremos hacer:

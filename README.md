@@ -13,7 +13,7 @@ Sirve para cosas como:
 - Automatizar tareas repetitivas en una planilla (copiar datos, generar reportes, mandar mails).
 - Ejecutar código automáticamente: cada X minutos, cuando alguien edita una celda, cuando llega un formulario.
 - Publicar una "mini API" o una página web sin tener un servidor propio.
-- Conectar Google con otros servicios (APIs externas, WhatsApp, etc.).
+- Conectar Google con otros servicios (APIs externas, sistemas de pago, mensajería, etc.).
 
 ## Temas
 
@@ -23,7 +23,7 @@ Sirve para cosas como:
 | 1   | Fundamentos: ejecución, límites, logging, errores y utils (fechas, IDs, hash, texto) | [`src/fundamentos`](src/fundamentos), [`src/utils`](src/utils) | Listo     |
 | 2   | Spreadsheet: leer/escribir en bloque, filas como objetos, búsqueda en hojas grandes, formato, funciones personalizadas, fechas | [`src/spreadsheet`](src/spreadsheet) | Listo |
 | 3   | Drive y archivos: carpetas, búsqueda, blobs/base64/CSV/zip, PDF y Excel, plantillas, permisos | [`src/drive`](src/drive) | Listo |
-| 4   | Requests (HTTP saliente): GET/POST/JSON/archivos, códigos de error, en paralelo, reintentos, autenticación, WhatsApp | [`src/requests`](src/requests) | Listo |
+| 4   | Requests (HTTP saliente): GET/POST/JSON/archivos, códigos de error, en paralelo, reintentos, autenticación | [`src/requests`](src/requests) | Listo |
 | 5   | Backend / Endpoints                                                                  | `src/backend`                                                  | Pendiente |
 | 6   | HTML / UI                                                                            | `src/html`                                                     | Pendiente |
 | 7   | Triggers y automatización                                                            | `src/triggers`                                                 | Pendiente |

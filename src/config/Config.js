@@ -19,8 +19,8 @@
  *  ¿Dónde se ven las Propiedades del script?
  *  En el editor de Apps Script: ⚙️ Configuración del proyecto (Project
  *  Settings) > abajo de todo, "Propiedades del script".
- *  Ahí podés agregar valores a mano (por ejemplo WHATSAPP_TOKEN) y el
- *  código los lee con getConfig_("WHATSAPP_TOKEN").
+ *  Ahí podés agregar valores a mano (por ejemplo MI_API_KEY) y el
+ *  código los lee con getConfig_("MI_API_KEY").
  *
  *  Convención de nombres que usamos en toda la guía:
  *    - Las funciones que terminan con guion bajo (ej: getConfig_) son
